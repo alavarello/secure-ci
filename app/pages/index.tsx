@@ -2,9 +2,32 @@ import { ConnectButton } from '@rainbow-me/rainbowkit';
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import styles from '../styles/Home.module.css';
-import {InputLabel} from "@mui/material";
+import { Button, InputLabel } from "@mui/material";
+import { useEffect, useState } from 'react';
+import { connectSnap, getSnap } from '../services/snap/snap';
 
 const Home: NextPage = () => {
+  const [isConnectingPlugin, setIsConnectingPlugin] = useState(false)
+  const [isPluginActive, setIsPluginActive] = useState(false)
+
+  const handleConnectPlugin = async () => {
+    setIsConnectingPlugin(true);
+    try {
+      await connectSnap()
+    } catch (error) {
+      console.error(error)
+    }
+    setIsConnectingPlugin(false)
+  }
+
+  useEffect(() => {
+      getSnap().then((snap) => {
+      if(!!snap) setIsPluginActive(true)
+    }).catch((error) => {
+      console.error(error)
+    })
+  }, [getSnap, setIsPluginActive])
+
   return (
     <div className={styles.container}>
       <Head>
@@ -27,6 +50,14 @@ const Home: NextPage = () => {
         <a href="https://rainbow.me" rel="noopener noreferrer" target="_blank">
           Made with ❤️ by your frens at 🌈
         </a>
+        
+        {isPluginActive ? "SCI is active and monitoring." :
+          isConnectingPlugin ? <progress/> :
+            <Button onClick={() => {
+              handleConnectPlugin()
+            }}>Activate SCI! Make your transactions secure.
+            </Button>
+          }
       </footer>
     </div>
   );
