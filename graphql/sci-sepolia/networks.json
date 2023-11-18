@@ -1,0 +1,8 @@
+{
+  "sepolia": {
+    "SCIRegistry": {
+      "address": "0x11B6CFb8e498Ac6FA6ADB7Ef2e6c528b13C42B87",
+      "startBlock": 4718012
+    }
+  }
+}
