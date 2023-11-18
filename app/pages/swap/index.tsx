@@ -4,14 +4,13 @@ import { NextPage } from "next";
 import styles from './Swap.module.css';
 import {useCowswapProvider} from "../../hooks/useCowswapProvider";
 import {useState} from "react";
-
-//  Fill this form https://cowprotocol.typeform.com/to/rONXaxHV once you pick your "appCode"
-
+import {useConnectedAddress} from "../../hooks/useConnectedAddress";
+import {useChainId} from "../../hooks/useChainId";
+import {useRouter} from "next/router";
 const cowParams: CowSwapWidgetParams = {
     "appCode": "secureCI COWSwap Integration",
     "width": "420px",
     "height": "529px",
-    "chainId": 5, // 1 (Mainnet), 5 (Goerli), 100 (Gnosis)
     "tradeType": TradeType.SWAP,
     "sell": {
         "asset": "",
@@ -26,13 +25,24 @@ const cowParams: CowSwapWidgetParams = {
 }
 
 const Swap: NextPage = () => {
+    const router = useRouter();
     const [contractAddress, setContractAddress] = useState<string>("");
     const provider = useCowswapProvider({setContractAddress});
+    const { address } = useConnectedAddress();
+    const { chainId: originalChainId } = useChainId();
+    const supportedNetworks = [1, 5, 100] // 1 (Mainnet), 5 (Goerli), 100 (Gnosis)
+    const isSupportedNetwork = supportedNetworks.includes(originalChainId);
 
     return (
         <div className={styles.main}>
-            {contractAddress || 'No verified contract address'}
-            <CowSwapWidget params={{...cowParams, provider}} provider={provider} />
+            {!isSupportedNetwork && <h2 className={styles.unsupported}>Unsupported network <br /> (Please use Gnosis, Goerli or Mainnet)</h2>}
+            {isSupportedNetwork &&
+                <>
+                    <h2>Pool Smart Contracts verification by <strong>secureCI</strong></h2>
+                    <p>Domain: {domain}</p>
+                    <CowSwapWidget params={{...cowParams, chainId: originalChainId, provider}} provider={provider} />
+                </>
+            }
         </div>
     )
 }

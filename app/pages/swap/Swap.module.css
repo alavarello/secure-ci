@@ -4,5 +4,10 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: 10rem;
+  margin-top: 8rem;
+
+  & > .unsupported {
+    margin-top: -8rem;
+    text-align: center;
+  }
 }
