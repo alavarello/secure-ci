@@ -53,7 +53,10 @@ export const WhitelistAddressesForm = ({
         />
 
       </form>
-      <Button type="submit" className={styles.modalButton}> 
+      <Button
+        type="submit"
+        className={styles.modalButton}
+      >
                     Whitelist new addresses
                     </Button>
     </Card>
