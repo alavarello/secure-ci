@@ -50,7 +50,7 @@ const Swap: NextPage<{domain: string}> = ({ domain }) => {
             {isSupportedNetwork &&
                 <div className={styles.cowPlugin}>
                     {contractAddress && isLoading && <h3>Fetching secureCI subgraph for {contractAddress}</h3>}
-                    {contractAddress && !isLoading && <h3 className={!isVerified && styles.notVerified}> {contractAddress} is {!isVerified && <b>NOT</b>} verified for {domain}</h3>}
+                    {contractAddress && !isLoading && <h3 className={!isVerified ? styles.notVerified : styles.verified}> {contractAddress} is {!isVerified && <b>NOT</b>} verified for {domain}</h3>}
                     <CowSwapWidget params={{...cowParams, chainId: originalChainId, provider}} provider={provider} />
                     <p className={styles.verification}>Pool Smart Contracts verification by <strong>secureCI</strong></p>
                 </div>

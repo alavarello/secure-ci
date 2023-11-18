@@ -12,12 +12,18 @@
     text-align: center;
   }
 }
+
 .cowPlugin {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
 }
+
+.verified {
+
+}
+
 .notVerified {
   color: #e50000;
 }
