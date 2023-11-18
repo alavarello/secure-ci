@@ -19,7 +19,11 @@ function Footer() {
     const handleConnectPlugin = async () => {
         setIsConnectingPlugin(true);
         try {
-            await connectSnap()
+            const snap = await getSnap();
+            if(!snap) {
+                await connectSnap()
+            }
+            setIsPluginActive(true)
         } catch (error) {
             console.error(error)
         }
