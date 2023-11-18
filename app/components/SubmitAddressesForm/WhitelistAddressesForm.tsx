@@ -39,9 +39,11 @@ export const WhitelistAddressesForm = ({
     } catch (e) {
         console.error(e);
         setError(`${e}`);
+        setLoading(false);
+        return
     }
 
-    setLoading(true)
+    setLoading(false);
 
     onSubmit?.(addresses.split('\n'))
   }
