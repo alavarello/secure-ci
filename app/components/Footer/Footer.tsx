@@ -4,6 +4,7 @@ import { Button } from "@mui/material";
 import { useEffect, useState } from "react";
 import { connectSnap, getSnap } from "../../services/snap/snap";
 import { useConnectedAddress } from "../../hooks/useConnectedAddress";
+import { Spinner } from '@ensdomains/thorin'
 
 function Footer() {
     const [isConnectingPlugin, setIsConnectingPlugin] = useState(false)
@@ -45,7 +46,7 @@ function Footer() {
             </a>
 
             {isPluginActive ? "SCI is active and monitoring." :
-                isConnectingPlugin ? <progress/> :
+                isConnectingPlugin ? <Spinner/> :
                     <Button onClick={() => {
                         handleConnectPlugin()
                     }}>Activate SCI! Make your transactions secure.

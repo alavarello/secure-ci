@@ -3,6 +3,7 @@ import styles from './WhitelistAddressesForm.module.css'
 import { Card, TextField } from '@mui/material'
 import { useState } from 'react'
 import {useSCIRegistry} from "../../hooks/useSCIRegistry";
+import { Spinner } from '@ensdomains/thorin'
 
 export const WhitelistAddressesForm = ({
   chainId,
@@ -51,7 +52,7 @@ export const WhitelistAddressesForm = ({
     return (
     <Card className={styles.modalContainer}>
       <h3 className={styles.h1Whitelist}>Whitelist addresses</h3>
-      {loading && <progress />}
+      {loading && <Spinner />}
       {error && <p className={styles.error}>{error}</p>}
       <form className={styles.container} onSubmit={handleSubmit} >
         <TextField

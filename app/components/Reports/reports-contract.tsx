@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
 import styles from './Reports.module.css';
 import { EASContext } from '../../stores/eas';
+import { Spinner } from '@ensdomains/thorin'
 
 function ReportsContract({
   chainId,
@@ -24,7 +25,7 @@ function ReportsContract({
   const loading = isContractLoading(chainId, contractAddress)
 
   if (loading) {
-    return <progress />;
+    return <Spinner />;
   }
 
   const reports = getReportByContract(chainId, contractAddress)
