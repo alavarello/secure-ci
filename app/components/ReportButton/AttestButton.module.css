@@ -7,6 +7,10 @@
   cursor: pointer;
 }
 
+.button:hover {
+  background-color: red;
+  border: 1px solid lightcoral;
+}
 
 .button:disabled {
   color: grey;
