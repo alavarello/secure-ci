@@ -7,7 +7,7 @@ interface AddressTableProps {
     canMutate: boolean
   }
 
-export const AddressesTable: React.FC<AddressTableProps> = ({ addresses, canMutate }) => {
+export const AddressesTable: React.FC<AddressTableProps> = ({ chainId = 1, addresses, canMutate }) => {
 
     const handleRemove = (address: string) => {
         console.log('Removeing address', address)
@@ -28,11 +28,11 @@ export const AddressesTable: React.FC<AddressTableProps> = ({ addresses, canMuta
                 </TableCell>
                 <TableCell>
                         <ReportContractButton
-                          chainId={1}
+                          chainId={chainId}
                           contractAddress={address}
                         />
                         <ReportsContract
-                          chainId={1}
+                          chainId={chainId}
                           contractAddress={address}
                         />
                 </TableCell>
