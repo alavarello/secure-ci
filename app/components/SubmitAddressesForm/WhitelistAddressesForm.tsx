@@ -2,20 +2,29 @@ import { Button } from '@mui/base'
 import styles from './WhitelistAddressesForm.module.css'
 import { Card, TextField } from '@mui/material'
 import { useState } from 'react'
+import {useSCIRegistry} from "../../hooks/useSCIRegistry";
 
 export const WhitelistAddressesForm = () => {
   // width of the TextField
   const width = 450
 
   const [addresses, setAddresses] = useState('');
+  const sciRegistry = useSCIRegistry();
 
-  function handleSubmit(event: any) {
+  async function handleSubmit(event: any) {
     event.preventDefault();
-    console.log(addresses.split('\n'));
-    //
+
+    if(!sciRegistry) return;
+
+    try {
+        await sciRegistry.addAddresses("secureci.xyz", 1, addresses.split('\n'));
+    } catch (e) {
+        console.error(e);
+    }
+
 }
 
-  return (
+    return (
     <Card className={styles.modalContainer}>
       <h3>Whitelist addresses</h3>
       <form className={styles.container} onSubmit={handleSubmit} >
@@ -24,6 +33,7 @@ export const WhitelistAddressesForm = () => {
             placeholder={"0xf032ecF3eDB10C103D9b99CEaa69E91be2D799f1" + '\n' + "0xf032ecF3eDB10C103D9b99CEaa69E91be2D799f1"}
             variant="outlined"
             value={addresses}
+            // @ts-ignore // TODO: Fix
             onInput={ e => setAddresses(e.target.value)}
             /* styles the wrapper */
             style={{ width }}
