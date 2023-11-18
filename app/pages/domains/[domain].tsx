@@ -4,10 +4,12 @@ import { DUMMY_DOMAIN_DATA_FROM_SUBGRAPH } from '../../test_data/test-data';
 import { useRouter } from 'next/router';
 import { Button, Card } from '@mui/material';
 import { AddressesTable } from '../../components/AddressTable/AddressTable';
-import { useQuery } from 'react-query'
 import { useModalContext } from '../../components/Modal/Modal.provider';
 import Modal from '../../components/Modal/Modal';
 import WhitelistAddressesForm from '../../components/SubmitAddressesForm/WhitelistAddressesForm';
+import { useConnectedAddress } from '../../hooks/useConnectedAddress';
+import { useSCIRegistry } from '../../hooks/useSCIRegistry';
+import { ConnectButton } from '@rainbow-me/rainbowkit';
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
@@ -18,27 +20,31 @@ import '@fontsource/lexend/300.css';
 import '@fontsource/lexend/400.css';
 import '@fontsource/lexend/500.css';
 import '@fontsource/lexend/700.css';
+import ReportDomainButton from '../../components/ReportButton/attest-report-domain';
+import ReportsDomain from '../../components/Reports/reports-domain';
 
-const CONNECTED_ADDRESS = '0xf032ecF3eDB10C103D9b99CEaa69E91be2D799f1'
-
-const verifyDomain = (domain: string) => {
-    console.log('verifying domain', domain)
-    if(!domain) return
-    // TODO export and implement this in services
-    return
-}
 
 const Domain: NextPage = () => {
-const router = useRouter()
-const { openModal } = useModalContext()
-const { domain } = router.query;
-const data = DUMMY_DOMAIN_DATA_FROM_SUBGRAPH.find(val => val.domain === domain)
-const isVerified: boolean = data?.addresses != undefined && data?.addresses.length > 0
-const { isLoading, refetch: verify } = useQuery(`verify-domain-${domain}`, () => verifyDomain(domain as string), {
-    enabled: false,
-})
+  const router = useRouter()
+  const { openModal } = useModalContext()
+  const { domain } = router.query
+  const data = DUMMY_DOMAIN_DATA_FROM_SUBGRAPH.find(val => val.domain === domain)
+  const isVerified: boolean = data?.addresses != undefined && data?.addresses.length > 0
+  const { address } = useConnectedAddress()
 
-    function handleChange(event: SelectChangeEvent<any>, child: React.ReactNode): void {
+  const sciRegistry = useSCIRegistry();
+  
+  async function verifyDomain() {
+    if(!sciRegistry) return;
+
+    try {
+        await sciRegistry.addAddresses(domain as string, 1, [address as string]);
+    } catch (e) {
+        console.error(e);
+    }
+  }
+
+    function handleChange(event: SelectChangeEvent<'Chain'>, child: React.ReactNode): void {
         throw new Error('Function not implemented.');
     }
 
@@ -83,15 +89,31 @@ return (
     <div className= {styles.h4}>
                     <AddressesTable
                         addresses={data.addresses}
-                        canMutate={data.owner === CONNECTED_ADDRESS}
+                        canMutate={data.owner === address}
                     />
+                    <div>
+                        <ReportDomainButton
+                            // @ts-ignore
+                            domainName={domain}
+                        />
+                        <ReportsDomain
+                            // @ts-ignore
+                            domainName={domain}
+                        />
+                    </div>
                 </div> 
                 </div> 
                 : 
                 <Card className={styles.verifyCardContainer}>
                     <h2>{domain}</h2>
-                    Lets get started with verifying
-                    <Button onClick={() => verify()}>Verify</Button>
+                    <span>Lets get started with verifying</span>
+                    {address ? 
+                      <div className={styles.verifyContainer}>
+                        <Button onClick={verifyDomain}>Verify</Button>
+                        <div>{address}</div>
+                      </div>
+                      : <ConnectButton />
+                    }
                 </Card> 
             }
         </main>

@@ -33,11 +33,17 @@
   justify-content: space-between;
 }
 
+.verifyContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
 .addressContainer{
   display: flex;
   justify-content: center;
 }
-
 
 .h2 {
   font-family:'Lexend', sans-serif;
@@ -73,6 +79,7 @@
   color:#04214c;
   padding-bottom: 00px;
 }
+
 .blockchainContainer{
   display: flex;
   justify-content: flex-end;
@@ -84,4 +91,4 @@
     text-align: center;
     width: 200px;
     padding-bottom: 20px;
-  }
+}
