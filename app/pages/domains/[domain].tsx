@@ -55,8 +55,6 @@ const Domain: NextPage = () => {
 
     if(!domain) return;
 
-    console.log(whiteListedAddresses?.contracts.map(val => val.address))
-
 return (
     <>
     <Modal>
