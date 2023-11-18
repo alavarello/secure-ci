@@ -11,6 +11,7 @@ import {
     sepolia,
 } from 'wagmi/chains';
 import { publicProvider } from 'wagmi/providers/public';
+import { alchemyProvider } from 'wagmi/providers/alchemy';
 import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
 import { EASProvider } from '../stores/eas';
@@ -26,7 +27,7 @@ const { chains, publicClient, webSocketPublicClient } = configureChains(
     goerli,
     hardhat,
   ],
-  [publicProvider()]
+  [publicProvider(), alchemyProvider({ apiKey: 'SIfRQTz5lQuN8zKVhiS7pX4w2OR8q4Jo' })]
 );
 
 const { connectors } = getDefaultWallets({

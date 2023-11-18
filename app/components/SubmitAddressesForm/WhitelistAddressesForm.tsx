@@ -14,6 +14,7 @@ export const WhitelistAddressesForm = ({
   onSubmit: (addresses: string[]) => void,
 }) => {
   const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
   // width of the TextField
   const width = 450
@@ -23,6 +24,7 @@ export const WhitelistAddressesForm = ({
 
   async function handleSubmit(event: any) {
     setLoading(true)
+    setError(null)
 
     event.preventDefault();
 
@@ -36,6 +38,7 @@ export const WhitelistAddressesForm = ({
         await sciRegistry.addAddresses(domainName, chainId, addresses.split('\n'));
     } catch (e) {
         console.error(e);
+        setError(`${e}`);
     }
 
     setLoading(true)
@@ -47,8 +50,10 @@ export const WhitelistAddressesForm = ({
     <Card className={styles.modalContainer}>
       <h3 className={styles.h1Whitelist}>Whitelist addresses</h3>
       {loading && <progress />}
+      {error && <p className={styles.error}>{error}</p>}
       <form className={styles.container} onSubmit={handleSubmit} >
         <TextField
+          className={styles.textField}
           disabled={loading}
             name='addresses'
             placeholder={"0xf032ecF3eDB10C103D9b99CEaa69E91be2D799f1" + '\n' + "0xf6b6f07862a02c85628b3a9688beae07fea9c863"}
