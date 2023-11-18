@@ -22,7 +22,8 @@ import '@fontsource/lexend/500.css';
 import '@fontsource/lexend/700.css';
 import ReportDomainButton from '../../components/ReportButton/attest-report-domain';
 import ReportsDomain from '../../components/Reports/reports-domain';
-
+import { getDomainWhitelistedAddresses } from '../../queries/domains';
+import { useQuery } from 'react-query';
 
 const Domain: NextPage = () => {
   const router = useRouter()
@@ -31,8 +32,12 @@ const Domain: NextPage = () => {
   const data = DUMMY_DOMAIN_DATA_FROM_SUBGRAPH.find(val => val.domain === domain)
   const isVerified: boolean = data?.addresses != undefined && data?.addresses.length > 0
   const { address } = useConnectedAddress()
-
   const sciRegistry = useSCIRegistry();
+
+  const { data: whiteListedAddresses } = useQuery(
+    ['getWhitelistedContracts', domain],
+    () => getDomainWhitelistedAddresses(domain as string)
+  )
   
   async function verifyDomain() {
     if(!sciRegistry) return;
@@ -49,6 +54,8 @@ const Domain: NextPage = () => {
     }
 
     if(!domain) return;
+
+    console.log(whiteListedAddresses?.contracts.map(val => val.address))
 
 return (
     <>
@@ -90,8 +97,8 @@ return (
     </div>
     <div className= {styles.h4}>
                     <AddressesTable
-                        addresses={data.addresses}
-                        canMutate={data.owner === address}
+                        addresses={whiteListedAddresses?.contracts.map(val => val.address) ?? []}
+                        canMutate={whiteListedAddresses?.domainOwner === address}
                     />
                     <div>
                         <ReportDomainButton
