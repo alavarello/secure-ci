@@ -1,5 +1,6 @@
 .navbar {
     position: static;
     background-color: transparent;
-    color: black
+    color: black;
+    padding-top: 3px;
 }

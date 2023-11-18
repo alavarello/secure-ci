@@ -14,8 +14,9 @@ function Header() {
         <Box sx={{ flexGrow: 1 }}>
             <AppBar className={styles.navbar}>
                 <Toolbar>
+
                     <Typography color="black" variant="h6" component="a" href="/" sx={{ flexGrow: 1 }}>
-                        SCI
+                    <img src="sci_resized.png" alt="sci_logo" />
                     </Typography>
                     <ConnectButton />
                 </Toolbar>

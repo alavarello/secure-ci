@@ -93,8 +93,9 @@ return (
                         addresses={data.addresses}
                         canMutate={data.owner === address}
                     />
+                    </div>
                     <div>
-                        <ReportDomainButton
+                        <ReportDomainButton 
                             // @ts-ignore
                             domainName={domain}
                         />
@@ -103,7 +104,6 @@ return (
                             domainName={domain}
                         />
                     </div>
-                </div> 
                 </div> 
                 : 
                 <Card className={styles.verifyCardContainer}>
