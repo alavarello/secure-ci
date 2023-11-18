@@ -7,6 +7,8 @@ import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 
 contract SCIRegistry is Ownable {
 
+    mapping(uint256 => mapping(address => bool)) public hasContractBeenWhitelisted;
+    mapping(string => bool) public hasDomainBeenWhitelisted;
     mapping(string => bool) public hasBeenWhitelisted;
     mapping(string => mapping(uint256 => mapping(address => bool))) public whitelist;
     mapping(uint256 => Authorizer) public authorizers;
@@ -35,6 +37,7 @@ contract SCIRegistry is Ownable {
 
         for(uint i = 0; i < addresses.length; i++) {
             whitelist[domain][chainId][addresses[i]] = true;
+            hasContractBeenWhitelisted[chainId][addresses[i]] = true;
         }
 
         emit AddressesAddedToDomain(authorizer, msg.sender, domain, chainId, addresses);
@@ -47,6 +50,10 @@ contract SCIRegistry is Ownable {
     }
 
     function isDomainWhitelisted(string calldata domainName) external returns (bool) {
-        return hasBeenWhitelisted[domainName];
+        return hasDomainBeenWhitelisted[domainName];
+    }
+
+    function hasContract(uint256 chainId, address contractAddress) external returns (bool) {
+        return hasContractBeenWhitelisted[chainId][contractAddress];
     }
 }

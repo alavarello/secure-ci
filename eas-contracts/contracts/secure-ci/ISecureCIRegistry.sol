@@ -5,6 +5,7 @@ import "./Authorizer.sol";
 
 // Must be synced with /eas-contracts/contracts/secure-ci/ISecureCIRegistry.sol
 interface ISecureCIRegistry {
+  function hasContract(uint256 chainId, address contractAddress) external returns (bool);
 
   function isDomainWhitelisted(string calldata domainName) external returns (bool);
 
