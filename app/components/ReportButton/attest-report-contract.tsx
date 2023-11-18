@@ -1,6 +1,7 @@
 import styles from './AttestButton.module.css';
 import { useContext } from "react";
 import { EASContext } from "../../stores/eas";
+import { Button } from '@mui/material';
 
 function ReportContractButton({
   chainId,
@@ -16,7 +17,7 @@ function ReportContractButton({
   }
 
   if (errorContract) {
-    return <p>Cannot attest: {`${errorContract}`}</p>;
+    return;
   }
 
   if (attestingContract) {
@@ -24,13 +25,12 @@ function ReportContractButton({
   }
 
   return (
-    <button
-      className={styles.button}
+    <Button variant="outlined" color="error"
       disabled={!eas || attestingContract || errorContract}
       onClick={onAttest}
     >
       Report BAD Contract
-    </button>
+    </Button>
   )
 }
 

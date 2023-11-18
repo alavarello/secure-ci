@@ -32,7 +32,7 @@ const ChainSelector: FC<{
     chainId: number,
     handleChange: any
 }> = ({originalChainId, chainId, handleChange}) => {
-    return <FormControl style={{margin: "auto", minWidth: "100px"}}>
+    return <FormControl style={{margin: "auto", minWidth: "150px"}}>
         <InputLabel id="demo-simple-select-label">Chain</InputLabel>
         <Select
             defaultValue={originalChainId}
@@ -143,20 +143,7 @@ const Domain: NextPage = () => {
                         </div>
                     </div>
                     <div>
-                        <ReportDomainButton
-                            // @ts-ignore
-                            domainName={domain}
-                        />
-                        <ReportsDomain
-                            // @ts-ignore
-                            domainName={domain}
-                        />
-                    </div>
-                    <div>
-                        <SubscribeDomainButton
-                            // @ts-ignore
-                            domainName={domain}
-                        />
+                        <SubscribeDomainButton domainName={domain}/>
                     </div>
                 </div>
             </main>

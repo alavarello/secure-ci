@@ -1,13 +1,14 @@
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 import ReportContractButton from "../ReportButton/attest-report-contract";
 import ReportsContract from "../Reports/reports-contract";
+import DisplayAddress from "../DisplayAddress/DisplayAddress";
 
 interface AddressTableProps {
     chainId: number
     addresses: string[]
     canMutate: boolean
     onRemove: (address: string) => void
-  }
+}
 
 export const AddressesTable: React.FC<AddressTableProps> = ({
   chainId = 1,
@@ -37,9 +38,9 @@ export const AddressesTable: React.FC<AddressTableProps> = ({
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
               >
                 <TableCell component="th" scope="row">
-                  {address}
+                    <DisplayAddress address={address} chainId={chainId}/>
                 </TableCell>
-                <TableCell>
+                <TableCell style={{display: "flex", justifyContent: "end"}}>
                         <ReportContractButton
                           chainId={chainId}
                           contractAddress={address}
