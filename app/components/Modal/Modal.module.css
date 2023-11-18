@@ -17,9 +17,9 @@
   max-width: 51.8rem;
   height: fit-content;
   max-height: 80%;
-
+  
   background-color: var(--white);
-  border: 1px solid var(--primary-700);
+  border: 2px solid var(--primary-700);
   border-radius: 50px;
   padding: var(--spacing-4);
 }
