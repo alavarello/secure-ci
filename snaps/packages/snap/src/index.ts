@@ -1,4 +1,4 @@
-import type { Json, OnRpcRequestHandler, OnTransactionHandler } from '@metamask/snaps-types';
+import type { Json, OnTransactionHandler } from '@metamask/snaps-types';
 import { copyable, divider, heading, image, panel, text } from '@metamask/snaps-ui';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { BigNumberish, toBeHex } from 'ethers';
@@ -80,12 +80,12 @@ export async function getReportsByContract(chainId: BigNumberish, contractAddres
       AND: [
         {
           decodedDataJson: {
-            contains: "{\"name\":\"chainId\",\"type\":\"uint256\",\"value\":{\"type\":\"BigNumber\",\"hex\":\"${toBeHex(chainId)}\"}}"
+            contains: "{\\"name\\":\\"chainId\\",\\"type\\":\\"uint256\\",\\"value\\":{\\"type\\":\\"BigNumber\\",\\"hex\\":\\"${toBeHex(chainId)}\\"}}"
           }
         },
         {
           decodedDataJson: {
-            contains: "{\"name\":\"contractAddress\",\"type\":\"address\",\"value\":\"${contractAddress}\"}"
+            contains: "{\\"name\\":\\"contractAddress\\",\\"type\\":\\"address\\",\\"value\\":\\"${contractAddress}\\"}"
           }
         }
       ]
@@ -110,7 +110,7 @@ export async function getReportsByDomainName(domainName: string | undefined) {
         equals: "${reportDomainSchema.uid}"
       }
       decodedDataJson: {
-        contains: "{\"name\":\"domainName\",\"type\":\"string\",\"value\":\"${domainName}\"}"
+        contains: "{\\"name\\":\\"domainName\\",\\"type\\":\\"string\\",\\"value\\":\\"${domainName}\\"}"
       }
     }) {
       _count {
@@ -146,39 +146,6 @@ async function queryEASGraphQl(query: string) {
 
   return b.data;
 }
-
-
-/**
- * Handle incoming JSON-RPC requests, sent through `wallet_invokeSnap`.
- *
- * @param args - The request handler args as object.
- * @param args.origin - The origin of the request, e.g., the website that
- * invoked the snap.
- * @param args.request - A validated JSON-RPC request object.
- * @returns The result of `snap_dialog`.
- * @throws If the request method is not valid for this snap.
- */
-export const onRpcRequest: OnRpcRequestHandler = ({ origin, request }) => {
-  console.log('requestinggg', request)
-  switch (request.method) {
-    case 'hello':
-      return snap.request({
-        method: 'snap_dialog',
-        params: {
-          type: 'confirmation',
-          content: panel([
-            text(`Hello, **${origin}**!`),
-            text('This custom confirmation is just for display purposes.'),
-            text(
-              'But you can edit the snap source code to make it do something, if you want to!',
-            ),
-          ]),
-        },
-      });
-    default:
-      throw new Error('Method not found.');
-  }
-};
 
 export const onTransaction: OnTransactionHandler = async ({
   transactionOrigin,

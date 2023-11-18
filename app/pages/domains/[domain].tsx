@@ -31,25 +31,12 @@ const Domain: NextPage = () => {
   const { domain } = router.query
   const { address } = useConnectedAddress()
   const { chainId: originalChainId } = useChainId()
-  const sciRegistry = useSCIRegistry();
   const [chainId, setChainId] = React.useState(originalChainId)
 
   const { data: whiteListedAddresses, refetch: getWhitelistedContractsAgain } = useQuery(
     ['getWhitelistedContracts', domain],
     () => getDomainWhitelistedAddresses(domain as string)
   )
-
-  const isVerified: boolean = !!(whiteListedAddresses && whiteListedAddresses.contracts.length > 0)
-  
-  async function verifyDomain() {
-    if(!sciRegistry) return;
-
-    try {
-        await sciRegistry.addAddresses(domain as string, 1, [address as string]);
-    } catch (e) {
-        console.error(e);
-    }
-  }
 
     function handleChange(event: SelectChangeEvent<'Chain'>, child: React.ReactNode): void {
         if (/^[0-9]+$/.test(String(event.target.value))) {
@@ -77,7 +64,6 @@ return (
     </Modal>
         <div>
         <main className={styles.main}>
-            {isVerified ? 
                 <div className={styles.verifiedContainer}>
                 <div className={styles.addressContainer}>
                 <a href={`https://${domain}`} target='_blank'>
@@ -133,19 +119,6 @@ return (
                         />
                     </div>
                 </div> 
-                : 
-                <Card className={styles.verifyCardContainer}>
-                    <h2>{domain}</h2>
-                    <span>Lets get started with verifying</span>
-                    {address ? 
-                      <div className={styles.verifyContainer}>
-                        <Button onClick={verifyDomain}>Verify</Button>
-                        <div>{address}</div>
-                      </div>
-                      : <ConnectButton />
-                    }
-                </Card> 
-            }
         </main>
         </div>
     </>
