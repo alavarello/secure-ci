@@ -28,7 +28,7 @@ const Home: NextPage = () => {
                 <Typography className={styles.h3}>Register your domain, secure your smart contracts, protect your users. </Typography>
                 <div className={styles.boxContainer}>
                     <FormControl className={styles.domainInput}>
-                    <TextField className={styles.textInput} label="Your Domain" >
+                    <TextField className={styles.textInput} label="Input Domain" >
                         <InputAdornment position="end">
                             <AccountCircle />
                         </InputAdornment>
