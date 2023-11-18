@@ -1,5 +1,5 @@
 import { createContext, useCallback, useEffect, useState } from 'react';
-import { EAS, SchemaEncoder } from '@ethereum-attestation-service/eas-sdk';
+import { EAS } from '@ethereum-attestation-service/eas-sdk';
 import { FallbackProvider, JsonRpcProvider, BrowserProvider } from 'ethers';
 import { usePublicClient, useWalletClient } from 'wagmi';
 import { reportContractSchema, reportDomainSchema } from '../utils/eas';

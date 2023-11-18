@@ -1,3 +1,4 @@
+import { SchemaEncoder } from '@ethereum-attestation-service/eas-sdk';
 import { toBeHex } from 'ethers';
 
 export const reportContractSchema = {
