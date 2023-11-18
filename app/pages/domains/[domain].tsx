@@ -24,6 +24,8 @@ import {useQuery} from 'react-query';
 import {useChainId} from '../../hooks/useChainId';
 import {FC, useEffect} from "react";
 import {minWidth} from "@mui/system";
+import SubscribeDomainButton from '../../components/SubscribeButton/subscribe-domain';
+import { sendNotification } from '../../utils/web3inbox';
 
 const ChainSelector: FC<{
     originalChainId: number,
@@ -76,8 +78,19 @@ const Domain: NextPage = () => {
 
     function onSubmit(addresses: string[]) {
         console.debug('New addresses', addresses)
+        sendNotification(domain, chainId, address,
+            `New contract${addresses.length === 1 ? '' : 's'} verified`,
+            `The following addresses has been verified:\n${addresses.join('\n')}`
+        )
         closeModal()
         getWhitelistedContractsAgain()
+    }
+
+    function onRemove(addressRemoved: string) {
+        sendNotification(domain, chainId, address,
+            `Contract is not verified anymore`,
+            `The following address has been unverified:\n${addressRemoved}`
+        )
     }
 
     if (!domain) return;
@@ -125,8 +138,25 @@ const Domain: NextPage = () => {
                                 chainId={chainId}
                                 addresses={whiteListedAddresses?.contracts.map(val => val.address) ?? []}
                                 canMutate={whiteListedAddresses?.domainOwner === address}
+                                onRemove={onRemove}
                             />
                         </div>
+                    </div>
+                    <div>
+                        <ReportDomainButton
+                            // @ts-ignore
+                            domainName={domain}
+                        />
+                        <ReportsDomain
+                            // @ts-ignore
+                            domainName={domain}
+                        />
+                    </div>
+                    <div>
+                        <SubscribeDomainButton
+                            // @ts-ignore
+                            domainName={domain}
+                        />
                     </div>
                 </div>
             </main>

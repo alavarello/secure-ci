@@ -6,13 +6,25 @@ interface AddressTableProps {
     chainId: number
     addresses: string[]
     canMutate: boolean
+    onRemove: (address: string) => void
   }
 
-export const AddressesTable: React.FC<AddressTableProps> = ({ chainId = 1, addresses, canMutate }) => {
+export const AddressesTable: React.FC<AddressTableProps> = ({
+  chainId = 1,
+  addresses,
+  canMutate = false,
+  onRemove,
+}: {
+  chainId: number,
+  addresses: string[],
+  canMutate: boolean,
+  onRemove: (address: string) => void,
+}) => {
 
     const handleRemove = (address: string) => {
         console.log('Removeing address', address)
         // TODO: Add request to back-end to remove address + re-render table values
+        onRemove?.(address)
     }
 
     return (
