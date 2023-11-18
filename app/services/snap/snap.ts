@@ -1,6 +1,7 @@
 import { defaultSnapOrigin } from './config';
 import { GetSnapsResponse, Snap } from './types';
 
+// TODO: Check windows.ethereum type
 /**
  * Get the installed snaps in MetaMask.
  *
@@ -8,6 +9,7 @@ import { GetSnapsResponse, Snap } from './types';
  */
 /* eslint-disable */
 export const getSnaps = async (): Promise<GetSnapsResponse> => {
+  // @ts-ignore
   return (await window.ethereum.request({
     method: 'wallet_getSnaps',
   })) as unknown as GetSnapsResponse;
@@ -23,6 +25,7 @@ export const connectSnap = async (
   snapId: string = defaultSnapOrigin,
   params: Record<'version' | string, unknown> = {},
 ) => {
+  // @ts-ignore
   await window.ethereum.request({
     method: 'wallet_requestSnaps',
     params: {
@@ -56,6 +59,7 @@ export const getSnap = async (version?: string): Promise<Snap | undefined> => {
  */
 
 export const sendHello = async () => {
+  // @ts-ignore
   await window.ethereum.request({
     method: 'wallet_invokeSnap',
     params: { snapId: defaultSnapOrigin, request: { method: 'hello' } },
