@@ -3,7 +3,7 @@ import { EAS, SchemaEncoder } from '@ethereum-attestation-service/eas-sdk';
 import { FallbackProvider, JsonRpcProvider, BrowserProvider } from 'ethers';
 import { usePublicClient, useWalletClient } from 'wagmi';
 
-const schemaUID = "0xb16fa048b0d597f5a821747eba64efa4762ee5143e9a80600d0005386edfc995";
+const schemaUID = "0xca272f6da4ba9af1f159c0a6b8f784ad8d058dfe08b67a4cf45d3aa064b67759";
 const schemaEncoder = new SchemaEncoder("uint256 chainId, address contractAddress");
 
 export function publicClientToProvider(publicClient) {
