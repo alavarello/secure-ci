@@ -21,6 +21,7 @@ function SubscribeDomainButton({
   const { address } = useConnectedAddress()
   const { signMessageAsync } = useSignMessage()
   const [registerError, setRegisterError] = useState<string | null>(null)
+  const [isAlreadyRegisted, setIsAlreadyRegisted] = useState<boolean>(false)
 
   // Initialize the Web3Inbox SDK
   const isReady = useInitWeb3InboxClient({
@@ -58,16 +59,33 @@ function SubscribeDomainButton({
     }
   }, [signMessageAsync, register, address])
 
+  // useEffect(() => {
+  //   // Register even if an identity key exists, to account for stale keys
+  //   performRegistration()
+  // }, [performRegistration])
+
   useEffect(() => {
-    // Register even if an identity key exists, to account for stale keys
-    performRegistration()
-  }, [performRegistration])
+    if (isRegistered) {
+      setIsAlreadyRegisted(true)
+    } else {
+      const savedRegistered = localStorage.getItem('web3inbox-regitered')
+
+      if (savedRegistered) {
+        performRegistration().then(() => {
+          setIsAlreadyRegisted(true)
+        }).catch((err) => {
+          setRegisterError(`${err}`)
+        })
+      }
+    }
+  }, [performRegistration, isRegistered])
 
   const performSubscribe = useCallback(async () => {
     // Register again just in case
     await performRegistration()
     await subscribe()
-  }, [subscribe, isRegistered])
+    localStorage.setItem('web3inbox-regitered', 'true')
+  }, [subscribe, isAlreadyRegisted])
 
   if (!address || !isReady) {
     return null;
@@ -75,7 +93,7 @@ function SubscribeDomainButton({
 
   return (
     <div className={styles.subscribe}>
-    {!isRegistered ? (
+    {!isAlreadyRegisted ? (
       <div>
         To manage notifications, sign and register an identity key:&nbsp;
         <button className={styles.button} onClick={performRegistration} disabled={isRegistering}>
