@@ -6,7 +6,7 @@ import "hardhat/console.sol";
 import "./interfaces/Authorizer.sol";
 import '@ensdomains/ens-contracts/contracts/registry/ENS.sol';
 
-contract EnsAuthorizer is Authorizer {
+contract ENSAuthorizer is Authorizer {
     ENS ensRegistry;
     // State Variables
     mapping(string => address) public verified;

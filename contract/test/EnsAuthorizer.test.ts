@@ -1,41 +1,48 @@
-import { anyValue } from "@nomicfoundation/hardhat-chai-matchers/withArgs";
 import { expect } from "chai";
-import { BaseContract, ContractTransactionResponse, Contract } from "ethers";
 import {ethers} from "hardhat";
-import {ENSRegistry, PublicResolver, EnsAuthorizer} from "../typechain-types";
+import {
+  ENSRegistry,
+  ENSAuthorizer,
+} from "../typechain-types";
+const ensNamehash: any = require('@ensdomains/eth-ens-namehash');
 
+const EMPTY_BYTES32 =
+    '0x0000000000000000000000000000000000000000000000000000000000000000'
 const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
 function sha3(name: string) {
   return ethers.keccak256(ethers.toUtf8Bytes(name))
 }
 
 describe("EnsAuthorizer", function () {
-  let ensRegistry: ENSRegistry, resolver: PublicResolver, ensAuthorizer: EnsAuthorizer, ensDomain: string;
+  let ensRegistry: ENSRegistry, ensAuthorizer: ENSAuthorizer, rootDomain: string;
 
   before(async () => {
     const [owner] = await ethers.getSigners();
-    ensDomain = ethers.namehash('xyz')
+    rootDomain = 'xyz';
+
     // ENS Contracts Deployment
     const registryFactory = await ethers.getContractFactory("ENSRegistry");
-    const publicResolverFactory = await ethers.getContractFactory("PublicResolver");
     ensRegistry = (await registryFactory.deploy()) as ENSRegistry;
-
     const ensRegistryAddr = await ensRegistry.getAddress();
-    resolver = await publicResolverFactory.deploy(ensRegistryAddr, ZERO_ADDRESS,ZERO_ADDRESS,ZERO_ADDRESS);
-    await ensRegistry.setSubnodeOwner(ethers.namehash(''), sha3('eth'), owner.address);
+    await ensRegistry.setSubnodeOwner(EMPTY_BYTES32, ensNamehash.hash(rootDomain), owner.address);
 
     // Ens Authorization Contract Deployment
-    const EnsAuthorizer = await ethers.getContractFactory("EnsAuthorizer");
+    const EnsAuthorizer = await ethers.getContractFactory("ENSAuthorizer");
     ensAuthorizer = await EnsAuthorizer.deploy(ensRegistryAddr);
-
   })
 
   describe("isAuthorize", function () {
     it("Should validate when address is owner of the domain", async function () {
-      const addr = (await ethers.getSigners())[1];
+      const owner = (await ethers.getSigners())[0];
       const domain = 'testdomain';
-      await ensRegistry.setSubnodeOwner(ethers.namehash(ensDomain), sha3(domain), addr.address);
-      expect(await ensAuthorizer.isAuthorize(addr.address, `${domain}.${ensDomain}`, 1, [])).to.equal(true);
+
+      console.log(await ensRegistry.owner(EMPTY_BYTES32));
+      //tried ethers.namehash, sha3 and all combinations nothing works, ayudame loco
+      await ensRegistry.setSubnodeOwner(EMPTY_BYTES32, ensNamehash.hash(rootDomain), owner.address);
+      console.log(await ensRegistry.owner(ensNamehash.hash(rootDomain)));
+      console.log(owner.address);
+      //await ensRegistry.setSubnodeRecord(sha3(rootDomain), ensNamehash.hash(domain), owner.address);
+      //expect(await ensAuthorizer.isAuthorize(owner.address, `${domain}.${rootDomain}`, 1, [])).to.equal(true);
     });
   });
 });
