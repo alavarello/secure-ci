@@ -1,0 +1,22 @@
+type Domain @entity {
+  id: ID!
+  domainOwner: Bytes! # address
+  contractAddresses: [Contract!]! # address[]
+}
+
+type Contract @entity {
+    id: ID!
+    chainId: BigInt! # uint256
+    address: Bytes! # address
+    domains: [Domain!]! # domains
+}
+
+type WhitelistEvent @entity(immutable: true) {
+    id: ID!
+    contract: Contract!
+    domain: Domain!
+    authorizer: BigInt! # uint256
+    blockNumber: BigInt!
+    transactionHash: Bytes!
+    blockTimestamp: BigInt!
+}

@@ -10,6 +10,16 @@ import WhitelistAddressesForm from '../../components/SubmitAddressesForm/Whiteli
 import { useConnectedAddress } from '../../hooks/useConnectedAddress';
 import { useSCIRegistry } from '../../hooks/useSCIRegistry';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
+import * as React from 'react';
+import Box from '@mui/material/Box';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+import '@fontsource/lexend/300.css';
+import '@fontsource/lexend/400.css';
+import '@fontsource/lexend/500.css';
+import '@fontsource/lexend/700.css';
 
 
 const Domain: NextPage = () => {
@@ -32,7 +42,7 @@ const Domain: NextPage = () => {
     }
   }
 
-  return (
+return (
     <>
     <Modal>
         <WhitelistAddressesForm />
@@ -41,9 +51,31 @@ const Domain: NextPage = () => {
         <main className={styles.main}>
             {isVerified && data?.addresses ? 
                 <div className={styles.verifiedContainer}>
-                    <h2>{domain}</h2>
+                <div className={styles.addressContainer}>
+                <a href={`https://${domain}`} target='_blank'>
+                    <h2 className={styles.h3}>{domain}
+                    </h2>
+                    </a>
+                    </div>
                     <div className={styles.tableTitle}>
-                        <h4>Addresses</h4>
+                        <h4 className={styles.h4}>Addresses</h4>
+                        <Box sx={{ minWidth: 180 }}>
+                          <FormControl fullWidth>
+                            <InputLabel id="demo-simple-select-label">Blockchain</InputLabel>
+                            <Select
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
+                            value="Chain"
+                            label="Chain"
+                            >
+                                <MenuItem value={10}>Mainnet</MenuItem>
+                                <MenuItem value={20}>Arbitrum</MenuItem>
+                                <MenuItem value={30}>Polygon</MenuItem>
+                                <MenuItem value={40}>Sepolia</MenuItem>
+                                <MenuItem value={50}>Goerli</MenuItem>
+                            </Select>
+                          </FormControl>
+                        </Box>
                         <Button onClick={openModal}>Whitelist new addresses</Button>
                     </div>
                     <AddressesTable
@@ -67,7 +99,7 @@ const Domain: NextPage = () => {
         </main>
         </div>
     </>
-  );
+);
 };
 
 export default Domain;
