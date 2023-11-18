@@ -1,7 +1,7 @@
 import type { NextPage } from 'next';
 import styles from './Domain.module.css';
 import { useRouter } from 'next/router';
-import { Button, Card, Typography } from '@mui/material';
+import { Button, Card } from '@mui/material';
 import { AddressesTable } from '../../components/AddressTable/AddressTable';
 import { useModalContext } from '../../components/Modal/Modal.provider';
 import Modal from '../../components/Modal/Modal';
@@ -57,6 +57,11 @@ const Domain: NextPage = () => {
         }
     }
 
+    function onSubmit(addresses: string[]) {
+        console.debug('New addresses', addresses)
+        closeModal()
+    }
+
     if(!domain) return;
 
 return (
@@ -66,7 +71,7 @@ return (
             chainId={chainId}
             // @ts-ignore
             domainName={domain}
-            onSubmit={closeModal}
+            onSubmit={onSubmit}
         />
     </Modal>
         <div>
