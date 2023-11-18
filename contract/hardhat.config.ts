@@ -9,6 +9,7 @@ interface EnvOptions {
   // ETHEREUM_BASE_PROVIDER_URL?: string;
   // ETHEREUM_LINEA_PROVIDER_URL?: string;
   ETHEREUM_SEPOLIA_PROVIDER_URL?: string;
+  ETHEREUM_SEPOLIA_PRIVATE_KEY?: string;
   // ETHEREUM_OPTIMISM_GOERLI_PROVIDER_URL?: string;
   // ETHEREUM_BASE_GOERLI_PROVIDER_URL?: string;
   // ETHEREUM_ARBITRUM_GOERLI_PROVIDER_URL?: string;
@@ -24,6 +25,7 @@ const {
   // ETHEREUM_BASE_PROVIDER_URL = '',
   // ETHEREUM_LINEA_PROVIDER_URL = '',
   ETHEREUM_SEPOLIA_PROVIDER_URL = '',
+  ETHEREUM_SEPOLIA_PRIVATE_KEY = '',
   // ETHEREUM_OPTIMISM_GOERLI_PROVIDER_URL = '',
   // ETHEREUM_BASE_GOERLI_PROVIDER_URL = '',
   // ETHEREUM_ARBITRUM_GOERLI_PROVIDER_URL = '',
@@ -56,13 +58,14 @@ const config: HardhatUserConfig = {
       url: ETHEREUM_SEPOLIA_PROVIDER_URL,
       // saveDeployments: true,
       // live: true,
+      accounts: [ETHEREUM_SEPOLIA_PRIVATE_KEY],
     },
   },
 
   // verify: {
-  //   etherscan: {
-  //     apiKey: ETHERSCAN_API_KEY
-  //   }
+    etherscan: {
+      apiKey: ETHERSCAN_API_KEY
+    }
   // },
 };
 

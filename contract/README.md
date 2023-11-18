@@ -11,3 +11,11 @@ REPORT_GAS=true npx hardhat test
 npx hardhat node
 npx hardhat run scripts/deploy.ts
 ```
+
+## Deploy Fake Registry
+
+```
+nvm use v20
+yarn hardhat --network sepolia run scripts/deploy-fake-secure-ci-registry.ts
+yarn hardhat --network sepolia verify 0x0703DD32Cc9c2D841CC60aee17FeB224D410BE3F
+```
