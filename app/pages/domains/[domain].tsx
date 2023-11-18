@@ -5,6 +5,9 @@ import { useRouter } from 'next/router';
 import { Button, Card } from '@mui/material';
 import { AddressesTable } from '../../components/AddressTable/AddressTable';
 import { useQuery } from 'react-query'
+import { useModalContext } from '../../components/Modal/Modal.provider';
+import Modal from '../../components/Modal/Modal';
+import WhitelistAddressesForm from '../../components/SubmitAddressesForm/WhitelistAddressesForm';
 
 const CONNECTED_ADDRESS = '0xf032ecF3eDB10C103D9b99CEaa69E91be2D799f1'
 
@@ -17,6 +20,7 @@ const verifyDomain = (domain: string) => {
 
 const Domain: NextPage = () => {
   const router = useRouter()
+  const { openModal } = useModalContext()
   const { domain } = router.query
   const data = DUMMY_DOMAIN_DATA_FROM_SUBGRAPH.find(val => val.domain === domain)
   const isVerified: boolean = data?.addresses != undefined && data?.addresses.length > 0
@@ -26,6 +30,9 @@ const Domain: NextPage = () => {
 
   return (
     <>
+    <Modal>
+        <WhitelistAddressesForm />
+    </Modal>
         <div>
         <main className={styles.main}>
             {isVerified && data?.addresses ? 
@@ -33,7 +40,7 @@ const Domain: NextPage = () => {
                     <h2>{domain}</h2>
                     <div className={styles.tableTitle}>
                         <h4>Addresses</h4>
-                        <Button onClick={() => console.log('whitelisting')}>Whitelist new addresses</Button>
+                        <Button onClick={openModal}>Whitelist new addresses</Button>
                     </div>
                     <AddressesTable
                         addresses={data.addresses}

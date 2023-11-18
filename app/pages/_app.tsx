@@ -19,6 +19,7 @@ import Footer from "../components/Footer/Footer";
 import { EASProvider } from '../stores/eas';
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { useState } from 'react';
+import ModalContextProvider from '../components/Modal/Modal.provider';
 
 const { chains, publicClient, webSocketPublicClient } = configureChains(
   [
@@ -65,9 +66,11 @@ function MyApp({ Component, pageProps }: AppProps) {
         <RainbowKitProvider chains={chains}>
           <EASProvider>
             <CssBaseline />
-            <Header/>
-            <Component {...pageProps} />
-            <Footer />
+            <ModalContextProvider>
+              <Header/>
+              <Component {...pageProps} />
+              <Footer />
+            </ModalContextProvider>
           </EASProvider>
         </RainbowKitProvider>
       </WagmiConfig>

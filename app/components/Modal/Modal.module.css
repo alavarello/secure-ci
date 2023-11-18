@@ -1,0 +1,25 @@
+.outerContainer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+
+  background-color: rgba(255,255,255,0.61);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 11;
+}
+
+.innerContainer {
+  width: 95%;
+  max-width: 51.8rem;
+  height: fit-content;
+  max-height: 80%;
+
+  background-color: var(--white);
+  border: 1px solid var(--primary-700);
+  border-radius: 30px;
+  padding: var(--spacing-4);
+}
