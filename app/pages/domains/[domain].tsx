@@ -8,11 +8,10 @@ import Modal, {ModalProps} from '../../components/Modal/Modal';
 import WhitelistAddressesForm from '../../components/SubmitAddressesForm/WhitelistAddressesForm';
 import {useConnectedAddress} from '../../hooks/useConnectedAddress';
 import * as React from 'react';
-import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
-import Select, {SelectChangeEvent} from '@mui/material/Select';
+import Select from '@mui/material/Select';
 import '@fontsource/lexend/300.css';
 import '@fontsource/lexend/400.css';
 import '@fontsource/lexend/500.css';
@@ -23,7 +22,6 @@ import {getDomainWhitelistedAddresses} from '../../queries/domains';
 import {useQuery} from 'react-query';
 import {useChainId} from '../../hooks/useChainId';
 import {FC, useEffect} from "react";
-import {minWidth} from "@mui/system";
 import SubscribeDomainButton from '../../components/SubscribeButton/subscribe-domain';
 import { sendNotification } from '../../utils/web3inbox';
 
@@ -58,6 +56,7 @@ const Domain: NextPage = () => {
     const {chainId: originalChainId} = useChainId()
     const [chainId, setChainId] = React.useState(originalChainId)
     const [isDomainOwner, setIsDomainOwner] = React.useState(false)
+    const [contracts, setContracts] = React.useState<{chainId: string, address: string}[]>([])
 
     const {data: whiteListedAddresses, refetch: getWhitelistedContractsAgain} = useQuery(
         ['getWhitelistedContracts', domain],
@@ -65,14 +64,25 @@ const Domain: NextPage = () => {
     )
 
     useEffect(() => {
+        if(!chainId || !whiteListedAddresses) return;
+        setContracts(whiteListedAddresses.contracts
+            .filter(contract => parseInt(contract.chainId) === chainId));
+    }, [chainId, whiteListedAddresses])
+
+    useEffect(() => {
         if(!address || !whiteListedAddresses) return;
         // TODO: Check the verifier instead of the subgraph
         setIsDomainOwner(address.toLowerCase() === whiteListedAddresses.domainOwner.toLowerCase());
     }, [address, whiteListedAddresses])
 
-    function handleChange(event: SelectChangeEvent<'Chain'>, child: React.ReactNode): void {
-        if (/^[0-9]+$/.test(String(event.target.value))) {
-            setChainId(parseInt(event.target.value))
+    useEffect(() => {
+        handleChange(originalChainId.toString());
+    }, [originalChainId]);
+
+    function handleChange(newChainId: string): void {
+        if (/^[0-9]+$/.test(String(newChainId))) {
+            setChainId(parseInt(newChainId))
+            getWhitelistedContractsAgain()
         }
     }
 
@@ -127,7 +137,7 @@ const Domain: NextPage = () => {
                                 <ChainSelector
                                     originalChainId={originalChainId}
                                     chainId={chainId}
-                                    handleChange={handleChange}
+                                    handleChange={(e: { target: { value: any; }; }) => handleChange(e.target.value)}
                                 />
                             </Grid>
                         </Grid>
@@ -136,8 +146,8 @@ const Domain: NextPage = () => {
                         <div className={styles.h4}>
                             <AddressesTable
                                 chainId={chainId}
-                                addresses={whiteListedAddresses?.contracts.map(val => val.address) ?? []}
-                                canMutate={whiteListedAddresses?.domainOwner === address}
+                                addresses={contracts.map(val => val.address) ?? []}
+                                canMutate={isDomainOwner}
                                 onRemove={onRemove}
                             />
                         </div>

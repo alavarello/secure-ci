@@ -2,7 +2,8 @@ import {FC} from "react";
 import Typography from "@mui/material/Typography";
 
 const EXPLORERS: { [key: number]: string } = {
-    5: "https://goerli.etherscan.io/address/{address}"
+    5: "https://goerli.etherscan.io/address/{address}",
+    1: "https://etherscan.io/address/{address}"
 }
 
 const DisplayAddress: FC<{
