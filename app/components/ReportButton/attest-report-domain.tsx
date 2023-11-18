@@ -1,6 +1,7 @@
 import styles from './AttestButton.module.css';
 import { useContext } from "react";
 import { EASContext } from "../../stores/eas";
+import {Button} from "@mui/material";
 
 function ReportDomainButton({
   domainName,
@@ -22,13 +23,12 @@ function ReportDomainButton({
   }
 
   return (
-    <button
-      className={styles.button}
+      <Button variant="outlined" color="error"
       disabled={!eas || attestingDomain || errorDomain}
       onClick={onAttest}
     >
-      Report BAD Domain
-    </button>
+      Report as a bad Domain
+    </Button>
   )
 }
 

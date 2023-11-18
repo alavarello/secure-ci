@@ -14,7 +14,6 @@
     flex-direction: column;
     box-sizing: content-box;
     display: flex;
-    margin: 4rem 4rem 4rem 4rem;
     width: 80%;
 }
 
@@ -71,29 +70,28 @@
 
 .h4 {
   font-family:'Lexend', sans-serif, ;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   font-size:25px;
-  height: 70px;
   color:#04214c;
   padding-bottom: 00px;
 }
 
 .blockchainContainer{
-  display: flex;
-  justify-content: flex-end;
+  width: 100%;
 }
 
 .blockchains {
+    display: flex;
     border-top: 3px solid #eaeaea;
-    justify-content: right;
+    justify-content: flex-end;
     text-align: center;
     width: 200px;
     padding-bottom: 40px;
 }
 
 .nicerButton {
+  display: flex;
+  align-content: center;
+  align-items: center;
   border: none;
   background-color: #0D76FD; 
   color: rgb(255, 255, 255); 
