@@ -24,7 +24,7 @@ describe.only("Registry", function () {
     [owner, ...addresses] = await ethers.getSigners();
 
     const SCIRegistryFactory = await ethers.getContractFactory("SCIRegistry");
-    sciRegistry = await SCIRegistryFactory.deploy(owner);
+    sciRegistry = await SCIRegistryFactory.deploy();
 
     const AlwaysTrueAuthorizer = await ethers.getContractFactory("AlwaysTrueAuthorizer");
     alwaysTrueAuthorizer = await AlwaysTrueAuthorizer.deploy();

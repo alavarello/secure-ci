@@ -1,12 +1,12 @@
 import { ethers } from "hardhat";
 
 async function main() {
-  const registry = await ethers.deployContract("Registry", [], {});
+  const registry = await ethers.deployContract("SCIRegistry", [], {});
 
   await registry.waitForDeployment();
 
   console.log(
-    `Registry deployed to ${await registry.getAddress()}`
+    `SCI Registry deployed to ${await registry.getAddress()}`
   );
 }
 

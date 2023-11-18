@@ -20,8 +20,7 @@ contract SCIRegistry is Ownable {
 
     event AddressesAddedToDomain(uint256 authorizer, address indexed domainOwner, string indexed domain, uint256 indexed chainId, address[] contractAddresses);
 
-
-    constructor(address initialOwner) Ownable(initialOwner) {}
+    constructor() Ownable(msg.sender) {}
 
     function addAddresses(
         uint256 authorizer,
