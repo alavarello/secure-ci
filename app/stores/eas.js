@@ -2,24 +2,7 @@ import { createContext, useCallback, useEffect, useState } from 'react';
 import { EAS, SchemaEncoder } from '@ethereum-attestation-service/eas-sdk';
 import { FallbackProvider, JsonRpcProvider, BrowserProvider } from 'ethers';
 import { usePublicClient, useWalletClient } from 'wagmi';
-
-const reportContractSchema = {
-  // Real
-  // uid: '0xb3e08a4b4e4d5f630f5a99978ad145cbe9eab4d9056764d5ae1dc7affcbc9649',
-
-  // Fake
-  uid: '0x83afd9a91bb9fc6178eccaac3ada2b308e841c4734e604ac6ee05baba196ce01',
-  schemaEncoder: new SchemaEncoder("uint256 chainId, address contractAddress"),
-}
-
-const reportDomainSchema = {
-  // Real
-  // uid: '0xeb484fecad7933bf4a88ee7f5308f167e5bdddfa6a751f618da49cd9497509af',
-
-  // Fake
-  uid: '0x6e5d0825f511b78440f9ff4e83bbaf4afeb51458bec3ca781612f2c944ef3d7f',
-  schemaEncoder: new SchemaEncoder("string domainName"),
-}
+import { reportContractSchema, reportDomainSchema } from '../utils/eas';
 
 export function publicClientToProvider(publicClient) {
   const { chain, transport } = publicClient;
