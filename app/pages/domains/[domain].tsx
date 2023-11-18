@@ -85,9 +85,12 @@ return (
         <FormControl fullWidth>
         <InputLabel id="demo-simple-select-label">Chain</InputLabel>
         <Select
+        // @ts-ignore
+        defaultValue={originalChainId}
         labelId="demo-simple-select-label"
         id="demo-simple-select"
-        value="Chain"
+        // @ts-ignore
+        value={chainId}
         label="Chain"
         onChange={handleChange}>
         <MenuItem selected={chainId == 1} value={1}>Mainnet</MenuItem>
