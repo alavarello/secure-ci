@@ -48,7 +48,7 @@ const Swap: NextPage = () => {
                 <>
                     <h2>Pool Smart Contracts verification by <strong>secureCI</strong></h2>
                     {contractAddress && isLoading && <h3>Fetching secureCI subgraph for {contractAddress}</h3>}
-                    {contractAddress && !isLoading && <h3> {contractAddress} is {!isVerified && <strong>not</strong>} verified for {domain}</h3>}
+                    {contractAddress && !isLoading && <h3> {contractAddress} is {!isVerified && <b>NOT</b>} verified for {domain}</h3>}
                     <p>Domain: {domain}</p>
                     <CowSwapWidget params={{...cowParams, chainId: originalChainId, provider}} provider={provider} />
                 </>
