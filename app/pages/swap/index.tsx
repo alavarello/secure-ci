@@ -1,6 +1,6 @@
 
 import { CowSwapWidget, CowSwapWidgetParams, TradeType } from '@cowprotocol/widget-react'
-import { NextPage } from "next";
+import {GetServerSideProps, NextPage} from "next";
 import styles from './Swap.module.css';
 import {useCowswapProvider} from "../../hooks/useCowswapProvider";
 import {useState} from "react";
@@ -26,11 +26,10 @@ const cowParams: CowSwapWidgetParams = {
     "interfaceFeeBips": "50" // Fill the form above if you are interested
 }
 
-const Swap: NextPage = () => {
+const Swap: NextPage<{domain: string}> = ({ domain }) => {
     const router = useRouter();
     const [contractAddress, setContractAddress] = useState<string>("");
     const provider = useCowswapProvider({setContractAddress});
-    const domain = 'secureci.xyz';
     const { chainId: originalChainId } = useChainId();
     const supportedNetworks = [1, 5, 100] // 1 (Mainnet), 5 (Goerli), 100 (Gnosis)
     const isSupportedNetwork = supportedNetworks.includes(originalChainId);
@@ -40,7 +39,12 @@ const Swap: NextPage = () => {
         () => getDomainsByContractAddress(contractAddress)
     )
 
-    const isVerified = !isLoading && contractAddress && whiteListedDomains && whiteListedDomains.domains.some((d) => d.id === domain);
+    const isVerified = !isLoading &&
+        contractAddress &&
+        whiteListedDomains &&
+        whiteListedDomains.chainId === `${originalChainId}` &&
+        whiteListedDomains.domains.some((d) => d.id === domain);
+
     return (
         <div className={styles.main}>
             {!isSupportedNetwork && <h2 className={styles.unsupported}>Unsupported network <br /> (Please use Gnosis, Goerli or Mainnet)</h2>}
@@ -49,11 +53,18 @@ const Swap: NextPage = () => {
                     <h2>Pool Smart Contracts verification by <strong>secureCI</strong></h2>
                     {contractAddress && isLoading && <h3>Fetching secureCI subgraph for {contractAddress}</h3>}
                     {contractAddress && !isLoading && <h3> {contractAddress} is {!isVerified && <b>NOT</b>} verified for {domain}</h3>}
-                    <p>Domain: {domain}</p>
                     <CowSwapWidget params={{...cowParams, chainId: originalChainId, provider}} provider={provider} />
+                    <p className={styles.domain}>Domain: {domain}</p>
                 </>
             }
         </div>
     )
 }
+export const getServerSideProps: GetServerSideProps = async (context) => {
+    const domain = context.req.headers.host;
+    return {
+        props: { domain },
+    };
+}
+
 export default Swap;
