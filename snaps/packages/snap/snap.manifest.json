@@ -1,0 +1,28 @@
+{
+  "version": "0.1.0",
+  "description": "Verify your contract interactions with Secure Contract Interaction.",
+  "proposedName": "SCI Verification",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MetaMask/template-snap-monorepo.git"
+  },
+  "source": {
+    "shasum": "CV4PBnj0giwELw6rv5ce5n7nOEKoLdXxFFAvGSrHPNA=",
+    "location": {
+      "npm": {
+        "filePath": "dist/bundle.js",
+        "iconPath": "images/scilogo.svg",
+        "packageName": "snap",
+        "registry": "https://registry.npmjs.org/"
+      }
+    }
+  },
+  "initialPermissions": {
+    "snap_dialog": {},
+    "endowment:transaction-insight": {
+      "allowTransactionOrigin": true
+    },
+    "endowment:network-access": {}
+  },
+  "manifestVersion": "0.1"
+}
