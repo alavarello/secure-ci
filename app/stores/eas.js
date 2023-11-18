@@ -86,8 +86,10 @@ export const EASContext = createContext({
   eas: undefined,
   reportContract: (chainId, contractAddress) => console.debug('reportContract', chainId, contractAddress),
   reportDomain: (domainName) => console.debug('reportDomain', domainName),
-  attesting: false,
-  error: null,
+  attestingContract: false,
+  attestingDomain: false,
+  errorContract: null,
+  errorDomain: null,
   loadReportsByContract: (chainId, contractAddress) => console.debug('loadReportsByContract', chainId, contractAddress),
   loadReportsByDomain: (domainName) => console.debug('loadReportsByDomain', domainName),
   getReportByContract: (chainId, contractAddress) => 0,
@@ -104,8 +106,10 @@ export function EASProvider({
 }) {
   const signer = useSigner();
   const [eas, setEAS] = useState(undefined);
-  const [attesting, setAttesting] = useState(false);
-  const [error, setError] = useState(null);
+  const [attestingContract, setAttestingContract] = useState(false);
+  const [attestingDomain, setAttestingDomain] = useState(false);
+  const [errorContract, setErrorContract] = useState(null);
+  const [errorDomain, setErrorDomain] = useState(null);
   const [reports, setReports] = useState({})
   const [loading, setLoading] = useState({})
   const [errors, setErrors] = useState({})
@@ -188,27 +192,28 @@ export function EASProvider({
         data: encodedData,
       },
     };
-    setAttesting(true);
+    setErrorContract(null);
+    setAttestingContract(true);
     eas.attest(attestation).then(
       (tx) => {
         console.debug('attested tx', tx);
         tx.wait().then(
           (newAttestationUID) => {
             console.debug('newAttestationUID', newAttestationUID);
-            setAttesting(false);
+            setAttestingContract(false);
             loadReportsByContract(chainId, contractAddress)
           },
           (err) => {
             console.error('EAS tx wait', err);
-            setError(err);
-            setAttesting(false);
+            setErrorContract(err);
+            setAttestingContract(false);
           },
         );
       },
       (err) => {
         console.error('EAS attest failed', err);
-        setError(err);
-        setAttesting(false);
+        setErrorContract(err);
+        setAttestingContract(false);
       },
     );
   }, [eas, loadReportsByContract]);
@@ -230,27 +235,28 @@ export function EASProvider({
         data: encodedData,
       },
     };
-    setAttesting(true);
+    setErrorDomain(null);
+    setAttestingDomain(true);
     eas.attest(attestation).then(
       (tx) => {
         console.debug('attested tx', tx);
         tx.wait().then(
           (newAttestationUID) => {
             console.debug('newAttestationUID', newAttestationUID);
-            setAttesting(false);
+            setAttestingDomain(false);
             loadReportsByDomain(domainName)
           },
           (err) => {
             console.error('EAS tx wait', err);
-            setError(err);
-            setAttesting(false);
+            setErrorDomain(err);
+            setAttestingDomain(false);
           },
         );
       },
       (err) => {
         console.error('EAS attest failed', err);
-        setError(err);
-        setAttesting(false);
+        setErrorDomain(err);
+        setAttestingDomain(false);
       },
     );
   }, [eas, loadReportsByDomain])
@@ -260,8 +266,10 @@ export function EASProvider({
       eas,
       reportContract,
       reportDomain,
-      attesting,
-      error,
+      attestingContract,
+      attestingDomain,
+      errorContract,
+      errorDomain,
       loadReportsByContract,
       loadReportsByDomain,
       getReportByContract,

@@ -7,24 +7,24 @@ function ReportDomainButton({
 }: {
   domainName: string,
 }) {
-  const { eas, reportDomain, attesting, error } = useContext(EASContext);
+  const { eas, reportDomain, attestingDomain, errorDomain } = useContext(EASContext);
 
   const onAttest = () => {
     reportDomain(domainName);
   }
 
-  if (error) {
-    return <p>Cannot attest: {`${error}`}</p>;
+  if (errorDomain) {
+    return <p>Cannot attest: {`${errorDomain}`}</p>;
   }
 
-  if (attesting) {
+  if (attestingDomain) {
     return <progress />;
   }
 
   return (
     <button
       className={styles.button}
-      disabled={!eas || attesting || error}
+      disabled={!eas || attestingDomain || errorDomain}
       onClick={onAttest}
     >
       Report BAD Domain

@@ -9,24 +9,24 @@ function ReportContractButton({
   chainId: number,
   contractAddress: string,
 }) {
-  const { eas, reportContract, attesting, error } = useContext(EASContext);
+  const { eas, reportContract, attestingContract, errorContract } = useContext(EASContext);
 
   const onAttest = () => {
     reportContract(chainId, contractAddress);
   }
 
-  if (error) {
-    return <p>Cannot attest: {`${error}`}</p>;
+  if (errorContract) {
+    return <p>Cannot attest: {`${errorContract}`}</p>;
   }
 
-  if (attesting) {
+  if (attestingContract) {
     return <progress />;
   }
 
   return (
     <button
       className={styles.button}
-      disabled={!eas || attesting || error}
+      disabled={!eas || attestingContract || errorContract}
       onClick={onAttest}
     >
       Report BAD Contract
