@@ -95,12 +95,14 @@ return (
     </FormControl>
     </Box>
     </div>
+    <div>
     <div className= {styles.h4}>
                     <AddressesTable
                         addresses={whiteListedAddresses?.contracts.map(val => val.address) ?? []}
                         canMutate={whiteListedAddresses?.domainOwner === address}
                     />
                     </div>
+                </div>
                     <div>
                         <ReportDomainButton 
                             // @ts-ignore
