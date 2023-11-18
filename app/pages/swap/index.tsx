@@ -3,7 +3,7 @@ import { CowSwapWidget, CowSwapWidgetParams, TradeType } from '@cowprotocol/widg
 import {GetServerSideProps, NextPage} from "next";
 import styles from './Swap.module.css';
 import {useCowswapProvider} from "../../hooks/useCowswapProvider";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {useConnectedAddress} from "../../hooks/useConnectedAddress";
 import {useChainId} from "../../hooks/useChainId";
 import {useRouter} from "next/router";
@@ -25,14 +25,18 @@ const cowParams: CowSwapWidgetParams = {
     "theme": "light", // light/dark or provide your own color palette
 }
 
-const Swap: NextPage<{domain: string}> = ({ domain }) => {
-    const router = useRouter();
+const Swap: NextPage = () => {
+    const [domain, setDomain] = useState('');
     const [contractAddress, setContractAddress] = useState<string>("");
     const provider = useCowswapProvider({setContractAddress});
     const { chainId: originalChainId } = useChainId();
     const supportedNetworks = [1, 5, 100] // 1 (Mainnet), 5 (Goerli), 100 (Gnosis)
     const isSupportedNetwork = supportedNetworks.includes(originalChainId);
 
+    useEffect(() => {
+        setDomain(window.location.hostname);
+    }, []);
+    
     const { data: whiteListedDomains, isLoading } = useQuery(
         ['getDomainsByContract', contractAddress],
         () => getDomainsByContractAddress(contractAddress)
@@ -57,12 +61,6 @@ const Swap: NextPage<{domain: string}> = ({ domain }) => {
             }
         </div>
     )
-}
-export const getServerSideProps: GetServerSideProps = async (context) => {
-    const domain = context.req.headers.host;
-    return {
-        props: { domain },
-    };
 }
 
 export default Swap;
