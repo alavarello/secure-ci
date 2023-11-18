@@ -32,6 +32,15 @@
     cursor: pointer;
 }
 
+.modalButton:disabled {
+  color: grey;
+  background-color: lightgray;
+}
+
 .error {
   color: red;
+}
+
+.textField:disabled {
+  background-color: lightgray;
 }

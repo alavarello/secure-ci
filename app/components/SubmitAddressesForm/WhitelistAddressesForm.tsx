@@ -53,6 +53,7 @@ export const WhitelistAddressesForm = ({
       {error && <p className={styles.error}>{error}</p>}
       <form className={styles.container} onSubmit={handleSubmit} >
         <TextField
+          className={styles.textField}
           disabled={loading}
             name='addresses'
             placeholder={"0xf032ecF3eDB10C103D9b99CEaa69E91be2D799f1" + '\n' + "0xf6b6f07862a02c85628b3a9688beae07fea9c863"}
