@@ -62,7 +62,10 @@ const Domain: NextPage = () => {
 return (
     <>
     <Modal>
-        <WhitelistAddressesForm />
+        <WhitelistAddressesForm
+            // @ts-ignore
+            domainName={domain}
+        />
     </Modal>
         <div>
         <main className={styles.main}>

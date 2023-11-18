@@ -4,7 +4,11 @@ import { Card, TextField } from '@mui/material'
 import { useState } from 'react'
 import {useSCIRegistry} from "../../hooks/useSCIRegistry";
 
-export const WhitelistAddressesForm = () => {
+export const WhitelistAddressesForm = ({
+  domainName,
+}: {
+  domainName: string,
+}) => {
   // width of the TextField
   const width = 450
 
@@ -17,7 +21,7 @@ export const WhitelistAddressesForm = () => {
     if(!sciRegistry) return;
 
     try {
-        await sciRegistry.addAddresses("secureci.xyz", 1, addresses.split('\n'));
+        await sciRegistry.addAddresses(domainName, 1, addresses.split('\n'));
     } catch (e) {
         console.error(e);
     }
