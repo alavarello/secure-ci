@@ -1,4 +1,3 @@
-import { SchemaEncoder } from '@ethereum-attestation-service/eas-sdk';
 import { toBeHex } from 'ethers';
 
 export const reportContractSchema = {
@@ -7,7 +6,6 @@ export const reportContractSchema = {
 
   // Fake
   uid: '0x83afd9a91bb9fc6178eccaac3ada2b308e841c4734e604ac6ee05baba196ce01',
-  schemaEncoder: new SchemaEncoder("uint256 chainId, address contractAddress"),
 }
 
 export const reportDomainSchema = {
@@ -16,7 +14,6 @@ export const reportDomainSchema = {
 
   // Fake
   uid: '0x6e5d0825f511b78440f9ff4e83bbaf4afeb51458bec3ca781612f2c944ef3d7f',
-  schemaEncoder: new SchemaEncoder("string domainName"),
 }
 
 const EAS_SEPOLIA_GRAPH_QL = 'https://sepolia.easscan.org/graphql';

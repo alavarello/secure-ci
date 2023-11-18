@@ -1,8 +1,11 @@
 import { createContext, useCallback, useEffect, useState } from 'react';
-import { EAS } from '@ethereum-attestation-service/eas-sdk';
+import { EAS, SchemaEncoder } from '@ethereum-attestation-service/eas-sdk';
 import { FallbackProvider, JsonRpcProvider, BrowserProvider } from 'ethers';
 import { usePublicClient, useWalletClient } from 'wagmi';
 import { reportContractSchema, reportDomainSchema } from '../utils/eas';
+
+const reportContractSchemaEncoder = new SchemaEncoder("uint256 chainId, address contractAddress");
+const reportDomainSchemaEncoder = new SchemaEncoder("string domainName");
 
 export function publicClientToProvider(publicClient) {
   const { chain, transport } = publicClient;
@@ -112,7 +115,7 @@ export function EASProvider({
       console.error('There is not EAS');
       return;
     }
-    const encodedData = reportContractSchema.schemaEncoder.encodeData([
+    const encodedData = reportContractSchemaEncoder.encodeData([
       { name: "chainId", value: chainId, type: "uint256" },
       { name: "contractAddress", value: contractAddress, type: "address" },
     ]);
@@ -153,7 +156,7 @@ export function EASProvider({
       console.error('There is not EAS');
       return;
     }
-    const encodedData = reportDomainSchema.schemaEncoder.encodeData([
+    const encodedData = reportDomainSchemaEncoder.encodeData([
       { name: "domainName", value: domainName, type: "string" },
     ]);
     const attestation = {
