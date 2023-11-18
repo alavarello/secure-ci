@@ -10,7 +10,7 @@ import {
 export function handleAddressesAddedToDomain(
   event: AddressesAddedToDomainEvent
 ): void {
-  const domain = new Domain(event.params.domain.toHexString());
+  const domain = new Domain(event.params.domain);
   domain.domainOwner = event.params.domainOwner;
   domain.save();
 

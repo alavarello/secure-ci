@@ -18,7 +18,7 @@ contract SCIRegistry is Ownable {
      */
     error MessageSenderIsNotDomainOwner(address messageSender, string domain);
 
-    event AddressesAddedToDomain(uint256 authorizer, address indexed domainOwner, string indexed domain, uint256 indexed chainId, address[] contractAddresses);
+    event AddressesAddedToDomain(uint256 indexed authorizer, address indexed domainOwner, string domain, uint256 indexed chainId, address[] contractAddresses);
 
     constructor() Ownable(msg.sender) {}
 
