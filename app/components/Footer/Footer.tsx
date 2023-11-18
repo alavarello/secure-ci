@@ -1,13 +1,20 @@
 import styles from "../../styles/Footer.module.css";
 import * as React from "react";
-import {Button} from "@mui/material";
-import {useEffect, useState} from "react";
-import {connectSnap, getSnap, sendHello} from "../../services/snap/snap";
+import { Button } from "@mui/material";
+import { useEffect, useState } from "react";
+import { connectSnap, getSnap } from "../../services/snap/snap";
+import { useConnectedAddress } from "../../hooks/useConnectedAddress";
 
 function Footer() {
-
     const [isConnectingPlugin, setIsConnectingPlugin] = useState(false)
     const [isPluginActive, setIsPluginActive] = useState(false)
+    const { address } = useConnectedAddress()
+
+    useEffect(() => {
+        if(address && !isPluginActive) {
+            handleConnectPlugin()
+        }
+    }, [address])
 
     const handleConnectPlugin = async () => {
         setIsConnectingPlugin(true);
