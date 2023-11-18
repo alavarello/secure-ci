@@ -12,7 +12,6 @@
     "@cowprotocol/widget-react": "^0.2.3",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
-    "@ensdomains/thorin": "^0.6.44",
     "@ethereum-attestation-service/eas-sdk": "^1.3.3",
     "@fontsource/lexend": "^5.0.17",
     "@mui/icons-material": "^5.14.18",

@@ -1,7 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
 import styles from './Reports.module.css';
 import { EASContext } from '../../stores/eas';
-import { Spinner } from '@ensdomains/thorin'
 
 function ReportsDomain({
   domainName,
@@ -23,7 +22,7 @@ function ReportsDomain({
   const loading = isDomainLoading(domainName)
 
   if (loading) {
-    return <Spinner />;
+    return <progress />;
   }
 
   const reports = getReportByDomain(domainName)

@@ -2,7 +2,6 @@ import styles from './AttestButton.module.css';
 import { useContext } from "react";
 import { EASContext } from "../../stores/eas";
 import { Button } from '@mui/material';
-import { Spinner } from '@ensdomains/thorin'
 
 function ReportContractButton({
   chainId,
@@ -22,7 +21,7 @@ function ReportContractButton({
   }
 
   if (attestingContract) {
-    return <Spinner />;
+    return <progress />;
   }
 
   return (

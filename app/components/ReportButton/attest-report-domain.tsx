@@ -2,7 +2,6 @@ import styles from './AttestButton.module.css';
 import { useContext } from "react";
 import { EASContext } from "../../stores/eas";
 import {Button} from "@mui/material";
-import { Spinner } from '@ensdomains/thorin'
 
 function ReportDomainButton({
   domainName,
@@ -20,7 +19,7 @@ function ReportDomainButton({
   }
 
   if (attestingDomain) {
-    return <Spinner />;
+    return <progress />;
   }
 
   return (
