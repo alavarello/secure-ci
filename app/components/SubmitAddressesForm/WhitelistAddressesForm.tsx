@@ -5,9 +5,13 @@ import { useState } from 'react'
 import {useSCIRegistry} from "../../hooks/useSCIRegistry";
 
 export const WhitelistAddressesForm = ({
+  chainId,
   domainName,
+  onSubmit,
 }: {
+  chainId: number,
   domainName: string,
+  onSubmit: () => void,
 }) => {
   // width of the TextField
   const width = 450
@@ -21,10 +25,11 @@ export const WhitelistAddressesForm = ({
     if(!sciRegistry) return;
 
     try {
-        await sciRegistry.addAddresses(domainName, 1, addresses.split('\n'));
+        await sciRegistry.addAddresses(domainName, chainId, addresses.split('\n'));
     } catch (e) {
         console.error(e);
     }
+    onSubmit?.()
   }
 
     return (

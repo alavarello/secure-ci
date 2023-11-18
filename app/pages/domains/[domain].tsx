@@ -27,7 +27,7 @@ import { useChainId } from '../../hooks/useChainId';
 
 const Domain: NextPage = () => {
   const router = useRouter()
-  const { openModal } = useModalContext()
+  const { openModal, closeModal } = useModalContext()
   const { domain } = router.query
   const { address } = useConnectedAddress()
   const { chainId: originalChainId } = useChainId()
@@ -63,8 +63,10 @@ return (
     <>
     <Modal>
         <WhitelistAddressesForm
+            chainId={chainId}
             // @ts-ignore
             domainName={domain}
+            onSubmit={closeModal}
         />
     </Modal>
         <div>
