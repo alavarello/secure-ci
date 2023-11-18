@@ -11,7 +11,9 @@ import {
     optimism,
     polygon,
     base,
-    zora, hardhat,
+    zora,
+    hardhat,
+    sepolia,
 } from 'wagmi/chains';
 import { publicProvider } from 'wagmi/providers/public';
 import Header from "../components/Header/Header";
@@ -24,6 +26,7 @@ import ModalContextProvider from '../components/Modal/Modal.provider';
 const { chains, publicClient, webSocketPublicClient } = configureChains(
   [
     mainnet,
+    sepolia,
     hardhat,
   ],
   [publicProvider()]
