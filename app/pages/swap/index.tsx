@@ -23,7 +23,6 @@ const cowParams: CowSwapWidgetParams = {
         "amount": "0"
     },
     "theme": "light", // light/dark or provide your own color palette
-    "interfaceFeeBips": "50" // Fill the form above if you are interested
 }
 
 const Swap: NextPage<{domain: string}> = ({ domain }) => {
@@ -49,13 +48,12 @@ const Swap: NextPage<{domain: string}> = ({ domain }) => {
         <div className={styles.main}>
             {!isSupportedNetwork && <h2 className={styles.unsupported}>Unsupported network <br /> (Please use Gnosis, Goerli or Mainnet)</h2>}
             {isSupportedNetwork &&
-                <>
-                    <h2>Pool Smart Contracts verification by <strong>secureCI</strong></h2>
+                <div className={styles.cowPlugin}>
                     {contractAddress && isLoading && <h3>Fetching secureCI subgraph for {contractAddress}</h3>}
-                    {contractAddress && !isLoading && <h3> {contractAddress} is {!isVerified && <b>NOT</b>} verified for {domain}</h3>}
+                    {contractAddress && !isLoading && <h3 className={!isVerified && styles.notVerified}> {contractAddress} is {!isVerified && <b>NOT</b>} verified for {domain}</h3>}
                     <CowSwapWidget params={{...cowParams, chainId: originalChainId, provider}} provider={provider} />
-                    <p className={styles.domain}>Domain: {domain}</p>
-                </>
+                    <p className={styles.verification}>Pool Smart Contracts verification by <strong>secureCI</strong></p>
+                </div>
             }
         </div>
     )

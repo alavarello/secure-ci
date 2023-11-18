@@ -1,17 +1,28 @@
 .main {
   width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
+  gap: 3rem;
   justify-content: center;
   align-items: center;
-  margin-top: 8rem;
+  margin-top: 5rem;
 
   & > .unsupported {
-    margin-top: -8rem;
     text-align: center;
   }
 }
-.domain {
+.cowPlugin {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+.notVerified {
+  color: #e50000;
+}
+
+.verification {
   font-size: 8px;
   opacity: 29%;
 }
