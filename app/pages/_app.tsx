@@ -14,6 +14,8 @@ import {
   zora,
 } from 'wagmi/chains';
 import { publicProvider } from 'wagmi/providers/public';
+import Header from "../components/Header/Header";
+import Footer from "../components/Footer/Footer";
 import { EASProvider } from '../stores/eas';
 
 const { chains, publicClient, webSocketPublicClient } = configureChains(
@@ -48,7 +50,9 @@ function MyApp({ Component, pageProps }: AppProps) {
       <RainbowKitProvider chains={chains}>
         <EASProvider>
           <CssBaseline />
+          <Header/>
           <Component {...pageProps} />
+          <Footer />
         </EASProvider>
       </RainbowKitProvider>
     </WagmiConfig>
