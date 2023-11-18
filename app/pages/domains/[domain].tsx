@@ -34,7 +34,7 @@ const Domain: NextPage = () => {
   const sciRegistry = useSCIRegistry();
   const [chainId, setChainId] = React.useState(originalChainId)
 
-  const { data: whiteListedAddresses } = useQuery(
+  const { data: whiteListedAddresses, refetch: getWhitelistedContractsAgain } = useQuery(
     ['getWhitelistedContracts', domain],
     () => getDomainWhitelistedAddresses(domain as string)
   )
@@ -60,6 +60,7 @@ const Domain: NextPage = () => {
     function onSubmit(addresses: string[]) {
         console.debug('New addresses', addresses)
         closeModal()
+        getWhitelistedContractsAgain()
     }
 
     if(!domain) return;
