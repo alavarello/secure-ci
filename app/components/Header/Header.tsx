@@ -7,9 +7,9 @@ import {ConnectButton} from "@rainbow-me/rainbowkit";
 import {Box} from "@mui/system";
 // @ts-ignore
 
+// TODO: Include search in the domain left bar as ens has
 
 function Header() {
-
     return (
         <Box sx={{ flexGrow: 1 }}>
             <AppBar className={styles.navbar}>
