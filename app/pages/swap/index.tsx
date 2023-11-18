@@ -3,6 +3,7 @@ import { CowSwapWidget, CowSwapWidgetParams, TradeType } from '@cowprotocol/widg
 import { NextPage } from "next";
 import styles from './Swap.module.css';
 import {useCowswapProvider} from "../../hooks/useCowswapProvider";
+import {useState} from "react";
 
 //  Fill this form https://cowprotocol.typeform.com/to/rONXaxHV once you pick your "appCode"
 
@@ -25,11 +26,12 @@ const cowParams: CowSwapWidgetParams = {
 }
 
 const Swap: NextPage = () => {
-    const provider = useCowswapProvider();
-    console.log(`hay provider ${provider !== undefined}`)
-    console.log(provider)
+    const [contractAddress, setContractAddress] = useState<string>("");
+    const provider = useCowswapProvider({setContractAddress});
+
     return (
         <div className={styles.main}>
+            {contractAddress || 'No verified contract address'}
             <CowSwapWidget params={{...cowParams, provider}} provider={provider} />
         </div>
     )
