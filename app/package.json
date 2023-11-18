@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@cowprotocol/widget-react": "^0.2.3",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@ethereum-attestation-service/eas-sdk": "^1.3.3",

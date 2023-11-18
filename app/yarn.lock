@@ -126,6 +126,18 @@
     stream-browserify "^3.0.0"
     util "^0.12.4"
 
+"@cowprotocol/widget-lib@^0.2.1":
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/@cowprotocol/widget-lib/-/widget-lib-0.2.1.tgz#75a04c22ae33a47c84d55459cfb30f7e20847da5"
+  integrity sha512-9r1YLWef9qr7omAKZF82EkrPe/n5iajbUZyeTpMJIPc2mC93nECkT2BXGfX9CEFmoOmN+2IW5DdKYGS0gdtZAQ==
+
+"@cowprotocol/widget-react@^0.2.3":
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/@cowprotocol/widget-react/-/widget-react-0.2.3.tgz#aede030d1a54bcbee39f5a5c37454fee1fbf061a"
+  integrity sha512-lmaz2jbRkb7guIiUiimJ3YCpQYZHCFEODiMOz80/vSPHE8kDWvJCqIWHHPn/L0HeK1W0BnelcUKZ9jbOeenKDw==
+  dependencies:
+    "@cowprotocol/widget-lib" "^0.2.1"
+
 "@emotion/babel-plugin@^11.11.0":
   version "11.11.0"
   resolved "https://registry.yarnpkg.com/@emotion/babel-plugin/-/babel-plugin-11.11.0.tgz#c2d872b6a7767a9d176d007f5b31f7d504bb5d6c"
