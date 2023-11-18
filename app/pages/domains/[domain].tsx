@@ -102,7 +102,7 @@ return (
     <div>
     <div className= {styles.h4}>
                     <AddressesTable
-                        chainId={1} // FIXME
+                        chainId={chainId}
                         addresses={whiteListedAddresses?.contracts.map(val => val.address) ?? []}
                         canMutate={whiteListedAddresses?.domainOwner === address}
                     />
