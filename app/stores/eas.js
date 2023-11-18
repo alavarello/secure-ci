@@ -1,6 +1,6 @@
 import { createContext, useCallback, useEffect, useState } from 'react';
 import { EAS, SchemaEncoder } from '@ethereum-attestation-service/eas-sdk';
-import { FallbackProvider, JsonRpcProvider, BrowserProvider } from 'ethers';
+import { FallbackProvider, JsonRpcProvider, BrowserProvider, ZeroAddress } from 'ethers';
 import { usePublicClient, useWalletClient } from 'wagmi';
 import { reportContractSchema, reportDomainSchema } from '../utils/eas';
 
@@ -122,6 +122,7 @@ export function EASProvider({
     const attestation = {
       schema: reportContractSchema.uid,
       data: {
+        recipient: ZeroAddress,
         expirationTime: 0,
         revocable: true,
         data: encodedData,
@@ -162,6 +163,7 @@ export function EASProvider({
     const attestation = {
       schema: reportDomainSchema.uid,
       data: {
+        recipient: ZeroAddress,
         expirationTime: 0,
         revocable: true,
         data: encodedData,
