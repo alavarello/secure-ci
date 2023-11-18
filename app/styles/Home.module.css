@@ -4,8 +4,9 @@
 }
 
 .main {
-  min-height: 80vh;
-  padding: 4rem 0;
+  min-height: 40vh;
+  height: 80vh;
+  padding: 3rem 0;
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -92,13 +93,39 @@
   justify-content: center;
   align-items: center;
   font-size: 45px;
-  height: 100px;
-  color:#021736;
+  height: 40px;
+  color:#04214c;
+}
+
+.h3 {
+  font-family:'Lexend', sans-serif, ;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 25px;
+  height: 70px;
+  color:#73726D;
+  padding-bottom: 20px;
+}
+
+.boxContainer{
+  font-family:'Lexend', sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 10vh;
 }
 
 .domainInput {
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: 20px;
+  border-radius: 50px;
+  width: 500px;
+}
+
+.textInput {
+  display: flex;
+  justify-content: center;
+  width: 500px;
 }
