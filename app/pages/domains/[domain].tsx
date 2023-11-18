@@ -1,42 +1,42 @@
-import type { NextPage } from 'next';
+import type {NextPage} from 'next';
 import styles from './Domain.module.css';
-import { useRouter } from 'next/router';
-import { Button, Card } from '@mui/material';
-import { AddressesTable } from '../../components/AddressTable/AddressTable';
-import { useModalContext } from '../../components/Modal/Modal.provider';
+import {useRouter} from 'next/router';
+import {Button, Card} from '@mui/material';
+import {AddressesTable} from '../../components/AddressTable/AddressTable';
+import {useModalContext} from '../../components/Modal/Modal.provider';
 import Modal from '../../components/Modal/Modal';
 import WhitelistAddressesForm from '../../components/SubmitAddressesForm/WhitelistAddressesForm';
-import { useConnectedAddress } from '../../hooks/useConnectedAddress';
-import { useSCIRegistry } from '../../hooks/useSCIRegistry';
-import { ConnectButton } from '@rainbow-me/rainbowkit';
+import {useConnectedAddress} from '../../hooks/useConnectedAddress';
+import {useSCIRegistry} from '../../hooks/useSCIRegistry';
+import {ConnectButton} from '@rainbow-me/rainbowkit';
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
+import Select, {SelectChangeEvent} from '@mui/material/Select';
 import '@fontsource/lexend/300.css';
 import '@fontsource/lexend/400.css';
 import '@fontsource/lexend/500.css';
 import '@fontsource/lexend/700.css';
 import ReportDomainButton from '../../components/ReportButton/attest-report-domain';
 import ReportsDomain from '../../components/Reports/reports-domain';
-import { getDomainWhitelistedAddresses } from '../../queries/domains';
-import { useQuery } from 'react-query';
-import { useChainId } from '../../hooks/useChainId';
+import {getDomainWhitelistedAddresses} from '../../queries/domains';
+import {useQuery} from 'react-query';
+import {useChainId} from '../../hooks/useChainId';
 
 const Domain: NextPage = () => {
-  const router = useRouter()
-  const { openModal, closeModal } = useModalContext()
-  const { domain } = router.query
-  const { address } = useConnectedAddress()
-  const { chainId: originalChainId } = useChainId()
-  const [chainId, setChainId] = React.useState(originalChainId)
+    const router = useRouter()
+    const {openModal, closeModal} = useModalContext()
+    const {domain} = router.query
+    const {address} = useConnectedAddress()
+    const {chainId: originalChainId} = useChainId()
+    const [chainId, setChainId] = React.useState(originalChainId)
 
-  const { data: whiteListedAddresses, refetch: getWhitelistedContractsAgain } = useQuery(
-    ['getWhitelistedContracts', domain],
-    () => getDomainWhitelistedAddresses(domain as string)
-  )
+    const {data: whiteListedAddresses, refetch: getWhitelistedContractsAgain} = useQuery(
+        ['getWhitelistedContracts', domain],
+        () => getDomainWhitelistedAddresses(domain as string)
+    )
 
     function handleChange(event: SelectChangeEvent<'Chain'>, child: React.ReactNode): void {
         if (/^[0-9]+$/.test(String(event.target.value))) {
@@ -50,66 +50,65 @@ const Domain: NextPage = () => {
         getWhitelistedContractsAgain()
     }
 
-    if(!domain) return;
+    if (!domain) return;
 
-return (
-    <>
-    <Modal>
-        <WhitelistAddressesForm
-            chainId={chainId}
-            // @ts-ignore
-            domainName={domain}
-            onSubmit={onSubmit}
-        />
-    </Modal>
-        <div>
-        <main className={styles.main}>
+    return (
+        <>
+            <Modal>
+                <WhitelistAddressesForm
+                    chainId={chainId}
+                    // @ts-ignore
+                    domainName={domain}
+                    onSubmit={onSubmit}
+                />
+            </Modal>
+            <main className={styles.main}>
                 <div className={styles.verifiedContainer}>
-                <div className={styles.addressContainer}>
-                <a href={`https://${domain}`} target='_blank'>
-                    <h2 className={styles.h3}>{domain}
-                    </h2>
-                    </a>
+                    <div className={styles.addressContainer}>
+                        <a href={`https://${domain}`} target='_blank'>
+                            <h2 className={styles.h3}>{domain}
+                            </h2>
+                        </a>
                     </div>
                     <div className={styles.tableTitle}>
-                    <h4 className={styles.h4}>Addresses</h4>
-                    <Button onClick={openModal} className={styles.nicerButton}> 
-                    Whitelist new addresses
-                    </Button>
+                        <h4 className={styles.h4}>Addresses</h4>
+                        <Button onClick={openModal} className={styles.nicerButton}>
+                            Whitelist new addresses
+                        </Button>
                     </div>
                     <div className={styles.blockchainContainer}>
-                    <Box className={styles.blockchains} sx={{ maxWidth: 180 }}>
-        <FormControl fullWidth>
-        <InputLabel id="demo-simple-select-label">Chain</InputLabel>
-        <Select
-        // @ts-ignore
-        defaultValue={originalChainId}
-        labelId="demo-simple-select-label"
-        id="demo-simple-select"
-        // @ts-ignore
-        value={chainId}
-        label="Chain"
-        onChange={handleChange}>
-        <MenuItem selected={chainId == 1} value={1}>Mainnet</MenuItem>
-        <MenuItem selected={chainId == 42161} value={42161}>Arbitrum</MenuItem>
-        <MenuItem selected={chainId == 137} value={137}>Polygon</MenuItem>
-        <MenuItem selected={chainId == 11155111} value={11155111}>Sepolia</MenuItem>
-        <MenuItem selected={chainId == 5} value={5}>Goerli</MenuItem>
-        </Select>
-    </FormControl>
-    </Box>
-    </div>
-    <div>
-    <div className= {styles.h4}>
-                    <AddressesTable
-                        chainId={chainId}
-                        addresses={whiteListedAddresses?.contracts.map(val => val.address) ?? []}
-                        canMutate={whiteListedAddresses?.domainOwner === address}
-                    />
+                        <Box className={styles.blockchains} sx={{maxWidth: 180}}>
+                            <FormControl fullWidth>
+                                <InputLabel id="demo-simple-select-label">Chain</InputLabel>
+                                <Select
+                                    // @ts-ignore
+                                    defaultValue={originalChainId}
+                                    labelId="demo-simple-select-label"
+                                    id="demo-simple-select"
+                                    // @ts-ignore
+                                    value={chainId}
+                                    label="Chain"
+                                    onChange={handleChange}>
+                                    <MenuItem selected={chainId == 1} value={1}>Mainnet</MenuItem>
+                                    <MenuItem selected={chainId == 42161} value={42161}>Arbitrum</MenuItem>
+                                    <MenuItem selected={chainId == 137} value={137}>Polygon</MenuItem>
+                                    <MenuItem selected={chainId == 11155111} value={11155111}>Sepolia</MenuItem>
+                                    <MenuItem selected={chainId == 5} value={5}>Goerli</MenuItem>
+                                </Select>
+                            </FormControl>
+                        </Box>
                     </div>
-                </div>
                     <div>
-                        <ReportDomainButton 
+                        <div className={styles.h4}>
+                            <AddressesTable
+                                chainId={chainId}
+                                addresses={whiteListedAddresses?.contracts.map(val => val.address) ?? []}
+                                canMutate={whiteListedAddresses?.domainOwner === address}
+                            />
+                        </div>
+                    </div>
+                    <div>
+                        <ReportDomainButton
                             // @ts-ignore
                             domainName={domain}
                         />
@@ -118,11 +117,10 @@ return (
                             domainName={domain}
                         />
                     </div>
-                </div> 
-        </main>
-        </div>
-    </>
-);
+                </div>
+            </main>
+        </>
+    );
 };
 
 export default Domain;
