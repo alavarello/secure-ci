@@ -20,6 +20,8 @@ import '@fontsource/lexend/300.css';
 import '@fontsource/lexend/400.css';
 import '@fontsource/lexend/500.css';
 import '@fontsource/lexend/700.css';
+import ReportDomainButton from '../../components/ReportButton/attest-report-domain';
+import ReportsDomain from '../../components/Reports/reports-domain';
 
 
 const Domain: NextPage = () => {
@@ -82,6 +84,16 @@ return (
                         addresses={data.addresses}
                         canMutate={data.owner === address}
                     />
+                    <div>
+                        <ReportDomainButton
+                            // @ts-ignore
+                            domainName={domain}
+                        />
+                        <ReportsDomain
+                            // @ts-ignore
+                            domainName={domain}
+                        />
+                    </div>
                 </div> 
                 : 
                 <Card className={styles.verifyCardContainer}>
