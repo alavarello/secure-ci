@@ -1,6 +1,5 @@
 import type { NextPage } from 'next';
 import styles from './Domain.module.css';
-import { DUMMY_DOMAIN_DATA_FROM_SUBGRAPH } from '../../test_data/test-data';
 import { useRouter } from 'next/router';
 import { Button, Card } from '@mui/material';
 import { AddressesTable } from '../../components/AddressTable/AddressTable';
@@ -29,8 +28,6 @@ const Domain: NextPage = () => {
   const router = useRouter()
   const { openModal } = useModalContext()
   const { domain } = router.query
-  const data = DUMMY_DOMAIN_DATA_FROM_SUBGRAPH.find(val => val.domain === domain)
-  const isVerified: boolean = data?.addresses != undefined && data?.addresses.length > 0
   const { address } = useConnectedAddress()
   const sciRegistry = useSCIRegistry();
 
@@ -38,6 +35,8 @@ const Domain: NextPage = () => {
     ['getWhitelistedContracts', domain],
     () => getDomainWhitelistedAddresses(domain as string)
   )
+
+  const isVerified: boolean = !!(whiteListedAddresses && whiteListedAddresses.contracts.length > 0)
   
   async function verifyDomain() {
     if(!sciRegistry) return;
@@ -62,7 +61,7 @@ return (
     </Modal>
         <div>
         <main className={styles.main}>
-            {isVerified && data?.addresses ? 
+            {isVerified ? 
                 <div className={styles.verifiedContainer}>
                 <div className={styles.addressContainer}>
                 <a href={`https://${domain}`} target='_blank'>
