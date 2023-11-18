@@ -30,3 +30,10 @@
   align-items: center;
   justify-content: space-between;
 }
+
+.verifyContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}

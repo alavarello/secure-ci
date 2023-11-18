@@ -4,19 +4,13 @@ import { DUMMY_DOMAIN_DATA_FROM_SUBGRAPH } from '../../test_data/test-data';
 import { useRouter } from 'next/router';
 import { Button, Card } from '@mui/material';
 import { AddressesTable } from '../../components/AddressTable/AddressTable';
-import { useQuery } from 'react-query'
 import { useModalContext } from '../../components/Modal/Modal.provider';
 import Modal from '../../components/Modal/Modal';
 import WhitelistAddressesForm from '../../components/SubmitAddressesForm/WhitelistAddressesForm';
+import { useConnectedAddress } from '../../hooks/useConnectedAddress';
+import { useSCIRegistry } from '../../hooks/useSCIRegistry';
+import { ConnectButton } from '@rainbow-me/rainbowkit';
 
-const CONNECTED_ADDRESS = '0xf032ecF3eDB10C103D9b99CEaa69E91be2D799f1'
-
-const verifyDomain = (domain: string) => {
-    console.log('verifying domain', domain)
-    if(!domain) return
-    // TODO export and implement this in services
-    return
-}
 
 const Domain: NextPage = () => {
   const router = useRouter()
@@ -24,9 +18,19 @@ const Domain: NextPage = () => {
   const { domain } = router.query
   const data = DUMMY_DOMAIN_DATA_FROM_SUBGRAPH.find(val => val.domain === domain)
   const isVerified: boolean = data?.addresses != undefined && data?.addresses.length > 0
-  const { isLoading, refetch: verify } = useQuery(`verify-domain-${domain}`, () => verifyDomain(domain as string), {
-    enabled: false,
-  })
+  const { address } = useConnectedAddress()
+
+  const sciRegistry = useSCIRegistry();
+  
+  async function verifyDomain() {
+    if(!sciRegistry) return;
+
+    try {
+        await sciRegistry.addAddresses(domain as string, 1, [address as string]);
+    } catch (e) {
+        console.error(e);
+    }
+  }
 
   return (
     <>
@@ -44,14 +48,20 @@ const Domain: NextPage = () => {
                     </div>
                     <AddressesTable
                         addresses={data.addresses}
-                        canMutate={data.owner === CONNECTED_ADDRESS}
+                        canMutate={data.owner === address}
                     />
                 </div> 
                 : 
                 <Card className={styles.verifyCardContainer}>
                     <h2>{domain}</h2>
-                    Lets get started with verifying
-                    <Button onClick={() => verify()}>Verify</Button>
+                    <span>Lets get started with verifying</span>
+                    {address ? 
+                      <div className={styles.verifyContainer}>
+                        <Button onClick={verifyDomain}>Verify</Button>
+                        <div>{address}</div>
+                      </div>
+                      : <ConnectButton />
+                    }
                 </Card> 
             }
         </main>

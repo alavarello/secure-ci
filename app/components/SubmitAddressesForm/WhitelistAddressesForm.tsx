@@ -21,8 +21,7 @@ export const WhitelistAddressesForm = () => {
     } catch (e) {
         console.error(e);
     }
-
-}
+  }
 
     return (
     <Card className={styles.modalContainer}>
