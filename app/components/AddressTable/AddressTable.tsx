@@ -3,6 +3,7 @@ import ReportContractButton from "../ReportButton/attest-report-contract";
 import ReportsContract from "../Reports/reports-contract";
 
 interface AddressTableProps {
+    chainId: number
     addresses: string[]
     canMutate: boolean
   }
