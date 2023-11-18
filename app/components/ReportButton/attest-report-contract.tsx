@@ -1,17 +1,17 @@
 import { useContext } from "react";
 import { EASContext } from "../../stores/eas";
 
-function ReportButton({
+function ReportContractButton({
   chainId,
   contractAddress,
 }: {
   chainId: number,
   contractAddress: string,
 }) {
-  const { eas, attest, attesting, error } = useContext(EASContext);
+  const { eas, reportContract, attesting, error } = useContext(EASContext);
 
   const onAttest = () => {
-    attest(chainId, contractAddress);
+    reportContract(chainId, contractAddress);
   }
 
   if (error) {
@@ -32,4 +32,4 @@ function ReportButton({
   )
 }
 
-export default ReportButton;
+export default ReportContractButton;

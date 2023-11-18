@@ -3,8 +3,10 @@ import { EAS, SchemaEncoder } from '@ethereum-attestation-service/eas-sdk';
 import { FallbackProvider, JsonRpcProvider, BrowserProvider } from 'ethers';
 import { usePublicClient, useWalletClient } from 'wagmi';
 
-const schemaUID = "0xca272f6da4ba9af1f159c0a6b8f784ad8d058dfe08b67a4cf45d3aa064b67759";
-const schemaEncoder = new SchemaEncoder("uint256 chainId, address contractAddress");
+const reportContractSchema = {
+  uid: '0xca272f6da4ba9af1f159c0a6b8f784ad8d058dfe08b67a4cf45d3aa064b67759',
+  schemaEncoder: new SchemaEncoder("uint256 chainId, address contractAddress"),
+}
 
 export function publicClientToProvider(publicClient) {
   const { chain, transport } = publicClient;
@@ -83,7 +85,7 @@ export function useProvider() {
 
 export const EASContext = createContext({
   eas: undefined,
-  attest: (chainId, contractAddress) => console.debug('attest', chainId, contractAddress),
+  reportContract: (chainId, contractAddress) => console.debug('reportContract', chainId, contractAddress),
   attesting: false,
   error: null,
 });
@@ -107,18 +109,18 @@ export function EASProvider({
     }
   }, [signer]);
 
-  const attest = useCallback((chainId, contractAddress) => {
+  const reportContract = useCallback((chainId, contractAddress) => {
     console.debug('attest on eas', eas);
     if (!eas) {
       console.error('There is not EAS');
       return;
     }
-    const encodedData = schemaEncoder.encodeData([
+    const encodedData = reportContractSchema.schemaEncoder.encodeData([
       { name: "chainId", value: chainId, type: "uint256" },
       { name: "contractAddress", value: contractAddress, type: "address" },
     ]);
     const attestation = {
-      schema: schemaUID,
+      schema: reportContractSchema.uid,
       data: {
         expirationTime: 0,
         revocable: true,
@@ -152,7 +154,7 @@ export function EASProvider({
   return (
     <EASContext.Provider value={{
       eas,
-      attest,
+      reportContract,
       attesting,
       error,
     }}>
