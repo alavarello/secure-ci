@@ -1,10 +1,13 @@
+interface GraphQLResponseBase {
+  data: any;
+}
 export interface DomainContractsData {
   id: string
   domainOwner: string
   contracts: Array<{chainId: string, address: string}>
 }
 
-interface DomainContractsGraphQLResponseQuery {
+interface DomainContractsGraphQLResponseQuery extends GraphQLResponseBase {
   data: {
     domains: Array<{
       id: string
@@ -13,9 +16,26 @@ interface DomainContractsGraphQLResponseQuery {
     }>
   }
 }
+export interface ContractDomainsData {
+  id: string;
+  chainId: string;
+  address: string;
+  domains: Array<{ id: string, domainOwner: string }>;
+}
 
+interface ContractDomainsGraphQLResponseQuery extends GraphQLResponseBase {
+  data: {
+    contracts: Array<{
+      id: string;
+      chainId: string;
+      address: string;
+      domains: Array<{ domain: { id: string, domainOwner: string } }>;
+    }>;
+  };
+}
 
-async function queryTheGraphGraphQl(query: any) {
+async function queryTheGraphGraphQl<T extends GraphQLResponseBase>(query: any): Promise<ContractDomainsGraphQLResponseQuery
+    | DomainContractsGraphQLResponseQuery | null> {
   const r = await fetch('https://api.thegraph.com/subgraphs/name/alavarello/sci-goerli', {
     method: 'POST',
     headers: {
@@ -24,15 +44,16 @@ async function queryTheGraphGraphQl(query: any) {
     body: JSON.stringify({
       query,
     })
-  })
+  });
 
   if (r.status !== 200) {
     return null;
   }
 
-  const b: DomainContractsGraphQLResponseQuery = await r.json()
+  const b: T = await r.json();
   return b.data;
 }
+
 
 export async function getDomainWhitelistedAddresses(domain?: string): Promise<DomainContractsData | null> {
   if(!domain) return null
@@ -52,8 +73,8 @@ export async function getDomainWhitelistedAddresses(domain?: string): Promise<Do
       }
   `)
   if (!response) return null;
-
-  return response.domains.map((val) => {
+  const r = response as unknown as DomainContractsGraphQLResponseQuery['data'];
+  return r.domains.map((val) => {
     return {
       id: val.id,
       domainOwner: val.domainOwner,
@@ -67,4 +88,36 @@ export async function getDomainWhitelistedAddresses(domain?: string): Promise<Do
     }
   })[0] 
 }
-  
+export async function getDomainsByContractAddress(contractAddress?: string): Promise<ContractDomainsData | null> {
+  if (!contractAddress) return null;
+
+  const response = await queryTheGraphGraphQl(`
+    query DomainsByContractAddress {
+      contracts(where: {address: "${contractAddress}"}) {
+        id
+        chainId
+        address
+        domains {
+          domain {
+            id
+            domainOwner
+          }
+        }
+      }
+    }
+  `);
+
+  if (!response) return null;
+  const r = response as unknown as ContractDomainsGraphQLResponseQuery['data'];
+  return r.contracts.map((val) => {
+    return {
+      id: val.id,
+      chainId: val.chainId,
+      address: val.address,
+      domains: val.domains.map((val2) => ({
+        id: val2.domain.id,
+        domainOwner: val2.domain.domainOwner
+      }))
+    };
+  })[0];
+}
