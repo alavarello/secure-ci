@@ -59,16 +59,18 @@ return (
                     </div>
                     <div className={styles.tableTitle}>
                         <h4 className={styles.h4}>Addresses</h4>
-                        <Box sx={{ minWidth: 180 }}>
+                        <Button onClick={openModal}>Whitelist new addresses</Button>
+                    </div>
+                    <div className={styles.blockchainContainer}>
+                    <Box className={styles.blockchains} sx={{ maxWidth: 180 }}>
         <FormControl fullWidth>
-        <InputLabel id="demo-simple-select-label">Blockchain</InputLabel>
+        <InputLabel id="demo-simple-select-label">Chain</InputLabel>
         <Select
         labelId="demo-simple-select-label"
         id="demo-simple-select"
         value="Chain"
         label="Chain"
-        onChange={handleChange}
-        >
+        onChange={handleChange}>
         <MenuItem value={10}>Mainnet</MenuItem>
         <MenuItem value={20}>Arbitrum</MenuItem>
         <MenuItem value={30}>Polygon</MenuItem>
@@ -77,13 +79,13 @@ return (
         </Select>
     </FormControl>
     </Box>
-
-                        <Button onClick={openModal}>Whitelist new addresses</Button>
-                    </div>
+    </div>
+    <div className= {styles.h4}>
                     <AddressesTable
                         addresses={data.addresses}
                         canMutate={data.owner === CONNECTED_ADDRESS}
                     />
+                </div> 
                 </div> 
                 : 
                 <Card className={styles.verifyCardContainer}>

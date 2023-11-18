@@ -26,7 +26,7 @@ export const WhitelistAddressesForm = () => {
 
     return (
     <Card className={styles.modalContainer}>
-      <h3>Whitelist addresses</h3>
+      <h3 className={styles.h1Whitelist}>Whitelist addresses</h3>
       <form className={styles.container} onSubmit={handleSubmit} >
         <TextField
             name='addresses'
