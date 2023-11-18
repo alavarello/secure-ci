@@ -92,3 +92,19 @@
     width: 200px;
     padding-bottom: 40px;
 }
+
+.nicerButton {
+  border: none;
+  background-color: #0D76FD; /* Change to your preferred color */
+  color: rgb(255, 255, 255); /* Text color */
+  padding: 10px 20px; /* Adjust padding as needed */
+  border-radius: 5px; /* Round the corners */
+  transition: background-color 0.2s ease; /* Smooth hover effect */
+  font-size: 15px; /* Adjust the font size */
+  font-family: 'Lexend', sans-serif;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.nicerButton:hover {
+  background-color: #000000;}

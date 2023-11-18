@@ -2,7 +2,7 @@ import type { NextPage } from 'next';
 import styles from './Domain.module.css';
 import { DUMMY_DOMAIN_DATA_FROM_SUBGRAPH } from '../../test_data/test-data';
 import { useRouter } from 'next/router';
-import { Button, Card } from '@mui/material';
+import { Button, Card, Typography } from '@mui/material';
 import { AddressesTable } from '../../components/AddressTable/AddressTable';
 import { useModalContext } from '../../components/Modal/Modal.provider';
 import Modal from '../../components/Modal/Modal';
@@ -66,8 +66,10 @@ return (
                     </a>
                     </div>
                     <div className={styles.tableTitle}>
-                        <h4 className={styles.h4}>Addresses</h4>
-                        <Button onClick={openModal}>Whitelist new addresses</Button>
+                    <h4 className={styles.h4}>Addresses</h4>
+                    <Button onClick={openModal} className={styles.nicerButton}> 
+                    Whitelist new addresses
+                    </Button>
                     </div>
                     <div className={styles.blockchainContainer}>
                     <Box className={styles.blockchains} sx={{ maxWidth: 180 }}>

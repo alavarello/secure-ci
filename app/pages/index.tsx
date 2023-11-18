@@ -10,7 +10,6 @@ import '@fontsource/lexend/700.css';
 import { useRouter } from 'next/router'
 
 
-
 const Home: NextPage = () => {
 
   const router = useRouter()
