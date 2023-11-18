@@ -211,7 +211,7 @@ export function EASProvider({
         setAttesting(false);
       },
     );
-  }, [eas]);
+  }, [eas, loadReportsByContract]);
 
   const reportDomain = useCallback((domainName) => {
     if (!eas) {
@@ -253,7 +253,7 @@ export function EASProvider({
         setAttesting(false);
       },
     );
-  }, [eas])
+  }, [eas, loadReportsByDomain])
 
   return (
     <EASContext.Provider value={{
