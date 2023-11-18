@@ -33,3 +33,26 @@ scTopics
 
 .env*
 !.env.template
+
+# IGNORE deployments we don't care
+
+deployments/mainnet/*
+!deployments/mainnet/.chainId
+deployments/arbitrum-one/*
+!deployments/arbitrum-one/.chainId
+deployments/optimism/*
+!deployments/optimism/.chainId
+deployments/base/*
+!deployments/base/.chainId
+deployments/linea/*
+!deployments/linea/.chainId
+deployments/optimism-goerli/*
+!deployments/optimism-goerli/.chainId
+deployments/base-goerli/*
+!deployments/base-goerli/.chainId
+deployments/arbitrum-goerli/*
+!deployments/arbitrum-goerli/.chainId
+deployments/polygon-mumbai/*
+!deployments/polygon-mumbai/.chainId
+deployments/linea-goerli/*
+!deployments/linea-goerli/.chainId

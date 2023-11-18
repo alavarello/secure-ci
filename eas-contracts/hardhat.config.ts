@@ -109,7 +109,7 @@ const config: HardhatUserConfig = {
       chainId: 11155111,
       url: ETHEREUM_SEPOLIA_PROVIDER_URL,
       saveDeployments: true,
-      live: true
+      live: false
     },
     [DeploymentNetwork.OptimismGoerli]: {
       chainId: 420,
