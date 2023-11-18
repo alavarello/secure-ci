@@ -5,28 +5,26 @@ import { getDefaultWallets, RainbowKitProvider } from '@rainbow-me/rainbowkit';
 import type { AppProps } from 'next/app';
 import { configureChains, createConfig, WagmiConfig } from 'wagmi';
 import {
-  arbitrum,
-  goerli,
-  mainnet,
-  optimism,
-  polygon,
-  base,
-  zora,
+    arbitrum,
+    goerli,
+    mainnet,
+    optimism,
+    polygon,
+    base,
+    zora, hardhat,
 } from 'wagmi/chains';
 import { publicProvider } from 'wagmi/providers/public';
 import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
 import { EASProvider } from '../stores/eas';
+import { QueryClient, QueryClientProvider } from 'react-query'
+import { useState } from 'react';
+import ModalContextProvider from '../components/Modal/Modal.provider';
 
 const { chains, publicClient, webSocketPublicClient } = configureChains(
   [
     mainnet,
-    polygon,
-    optimism,
-    arbitrum,
-    base,
-    zora,
-    ...(process.env.NEXT_PUBLIC_ENABLE_TESTNETS === 'true' ? [goerli] : []),
+    hardhat,
   ],
   [publicProvider()]
 );
@@ -45,17 +43,33 @@ const wagmiConfig = createConfig({
 });
 
 function MyApp({ Component, pageProps }: AppProps) {
+  const [queryClient] = useState(
+    () =>
+      new QueryClient({
+        defaultOptions: {
+          queries: {
+            refetchOnWindowFocus: false,
+            retry: false,
+          },
+        },
+      }),
+  )
+
   return (
-    <WagmiConfig config={wagmiConfig}>
-      <RainbowKitProvider chains={chains}>
-        <EASProvider>
-          <CssBaseline />
-          <Header/>
-          <Component {...pageProps} />
-          <Footer />
-        </EASProvider>
-      </RainbowKitProvider>
-    </WagmiConfig>
+    <QueryClientProvider client={queryClient}>
+      <WagmiConfig config={wagmiConfig}>
+        <RainbowKitProvider chains={chains}>
+          <EASProvider>
+            <CssBaseline />
+            <ModalContextProvider>
+              <Header/>
+              <Component {...pageProps} />
+              <Footer />
+            </ModalContextProvider>
+          </EASProvider>
+        </RainbowKitProvider>
+      </WagmiConfig>
+    </QueryClientProvider>
   );
 }
 

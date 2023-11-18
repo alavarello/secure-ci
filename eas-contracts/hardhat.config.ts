@@ -23,6 +23,7 @@ interface EnvOptions {
   ETHEREUM_LINEA_GOERLI_PROVIDER_URL?: string;
   ETHERSCAN_API_KEY?: string;
   PROFILE?: boolean;
+  // EAS_ADDRESS?: string;
   // SECURE_CI_REGISTRY_ADDRESS?: string;
 }
 
@@ -40,6 +41,7 @@ const {
   ETHEREUM_LINEA_GOERLI_PROVIDER_URL = '',
   ETHERSCAN_API_KEY,
   PROFILE: isProfiling,
+  // EAS_ADDRESS = '',
   // SECURE_CI_REGISTRY_ADDRESS = '',
 }: EnvOptions = process.env as any as EnvOptions;
 
@@ -146,7 +148,7 @@ const config: HardhatUserConfig = {
   },
 
   solidity: {
-    version: '0.8.19',
+    // version: '0.8.19',
     settings: {
       optimizer: {
         enabled: true,
@@ -155,7 +157,33 @@ const config: HardhatUserConfig = {
       metadata: {
         bytecodeHash: 'none'
       }
-    }
+    },
+    compilers: [
+      {
+        version: '0.8.19',
+        settings: {
+          optimizer: {
+            enabled: true,
+            runs: 1000000
+          },
+          metadata: {
+            bytecodeHash: 'none'
+          }
+        },
+      },
+      {
+        version: '0.8.20',
+        settings: {
+          optimizer: {
+            enabled: true,
+            runs: 1000000
+          },
+          metadata: {
+            bytecodeHash: 'none'
+          }
+        },
+      },
+    ],
   },
 
   typechain: {

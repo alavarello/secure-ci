@@ -1,16 +1,15 @@
-'use client';
 import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import styles from './Header.module.css';
+import styles from "../../styles/Header.module.css";
 import {ConnectButton} from "@rainbow-me/rainbowkit";
 import {Box} from "@mui/system";
 // @ts-ignore
 
+// TODO: Include search in the domain left bar as ens has
 
 function Header() {
-
     return (
         <Box sx={{ flexGrow: 1 }}>
             <AppBar className={styles.navbar}>

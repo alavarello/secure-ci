@@ -2,6 +2,9 @@
 
 ## Deploy Report Schema Resolver
 
+- `contacts/secure-ci/ReportContactSchemaResolver.sol`
+- `contacts/secure-ci/ReportDomainSchemaResolver.sol`
+
 ```
 pnpm i
 HARDHAT_NETWORK=sepolia pnpm hardhat --network sepolia deploy

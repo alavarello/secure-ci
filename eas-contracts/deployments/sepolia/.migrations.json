@@ -1,10 +1,4 @@
 {
-  "000001-registry": 1677138964,
-  "000002-eas": 1677138984,
-  "000003-register-initial-schemas": 1677139251,
-  "000004-name-initial-schemas": 1677139550,
-  "000005-eip712-proxy": 1698797280,
-  "000006-indexer": 1698792410,
-  "000100-test-seed": 1677139824,
-  "000000-report-schema-resolver": 1700295556
+  "000000-report-contract-schema-resolver": 1700305828,
+  "000000-report-domain-schema-resolver": 1700305854
 }
