@@ -1,9 +1,4 @@
-import {Box} from "@mui/system";
-import AppBar from "@mui/material/AppBar";
-import styles from "../Header/Header.module.css";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
-import {ConnectButton} from "@rainbow-me/rainbowkit";
+import styles from "./Footer.module.css";
 import * as React from "react";
 import {Button} from "@mui/material";
 import {useEffect, useState} from "react";
