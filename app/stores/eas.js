@@ -116,6 +116,7 @@ export function EASProvider({
   useEffect(() => {
     console.debug('signer', signer);
     if (signer) {
+      console.debug('EASContractAddress', EASContractAddress);
       const eas = new EAS(EASContractAddress);
       eas.connect(signer);
       console.debug('eas', eas);
@@ -173,7 +174,7 @@ export function EASProvider({
       { name: "domainName", value: domainName, type: "string" },
     ]);
     const attestation = {
-      schema: reportContractSchema.uid,
+      schema: reportDomainSchema.uid,
       data: {
         expirationTime: 0,
         revocable: true,

@@ -1,0 +1,7 @@
+.button {
+  background-color: lightcoral;
+  border-radius: 6px;
+  border: 1px solid red;
+  margin: 6px;
+  cursor: pointer;
+}

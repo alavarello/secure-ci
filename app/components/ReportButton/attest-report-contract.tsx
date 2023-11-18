@@ -1,3 +1,4 @@
+import styles from './AttestButton.module.css';
 import { useContext } from "react";
 import { EASContext } from "../../stores/eas";
 
@@ -15,7 +16,7 @@ function ReportContractButton({
   }
 
   if (error) {
-    return `Cannot attest: ${error}`;
+    return <p>Cannot attest: {`${error}`}</p>;
   }
 
   if (attesting) {
@@ -24,6 +25,7 @@ function ReportContractButton({
 
   return (
     <button
+      className={styles.button}
       disabled={!eas || attesting || error}
       onClick={onAttest}
     >
