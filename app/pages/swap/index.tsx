@@ -3,28 +3,25 @@ import { CowSwapWidget, CowSwapWidgetParams, TradeType } from '@cowprotocol/widg
 import { NextPage } from "next";
 import styles from './Swap.module.css';
 import {useEthersSigner} from "../../hooks/useEtherSigner";
+import {useCowswapProvider} from "../../hooks/useCowswapProvider";
 
 //  Fill this form https://cowprotocol.typeform.com/to/rONXaxHV once you pick your "appCode"
 
 const params: CowSwapWidgetParams = {
-    "appCode": "My Cool App", // Name of your app (max 50 characters)
-    "width": "420px", // Width in pixels (or 100% to use all available space)
-    "height": "529px", // Ethereum EIP-1193 provider. For a quick test, you can pass `window.ethereum`, but consider using something like https://web3modal.com
+    "appCode": "secureCI COWSwap Integration",
+    "width": "420px",
+    "height": "529px",
     "chainId": 5, // 1 (Mainnet), 5 (Goerli), 100 (Gnosis)
-    "tradeType": TradeType.SWAP, // TradeType.SWAP, TradeType.LIMIT or TradeType.ADVANCED
-    "sell": { // Sell token. Optionally add amount for sell orders
+    //"provider": useCowswapProvider({chainId: 5}), // Ethereum EIP-1193 provider. For a quick test, you can pass `window.ethereum`, but consider using something like https://web3modal.com
+    "tradeType": TradeType.SWAP,
+    "sell": {
         "asset": "",
         "amount": "100"
     },
-    "buy": { // Buy token. Optionally add amount for buy orders
+    "buy": {
         "asset": "USDC",
         "amount": "0"
     },
-    "enabledTradeTypes": [ // TradeType.SWAP, TradeType.LIMIT and/or TradeType.ADVANCED
-        TradeType.SWAP,
-        TradeType.LIMIT,
-        TradeType.ADVANCED
-    ],
     "theme": "light", // light/dark or provide your own color palette
     "interfaceFeeBips": "50" // Fill the form above if you are interested
 }
