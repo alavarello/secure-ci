@@ -108,6 +108,17 @@
   padding-bottom: 20px;
 }
 
+.h4 {
+  font-family:'Lexend', sans-serif, ;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size:17px;
+  height: 70px;
+  color:#73726D;
+  padding-bottom: 20px;
+}
+
 .boxContainer{
   font-family:'Lexend', sans-serif;
   display: flex;
