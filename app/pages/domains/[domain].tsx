@@ -44,6 +44,7 @@ const ChainSelector: FC<{
             <MenuItem selected={chainId == 137} value={137}>Polygon</MenuItem>
             <MenuItem selected={chainId == 11155111} value={11155111}>Sepolia</MenuItem>
             <MenuItem selected={chainId == 5} value={5}>Goerli</MenuItem>
+            <MenuItem selected={chainId == 5} value={31337}>Hardhat</MenuItem>
         </Select>
     </FormControl>
 }
