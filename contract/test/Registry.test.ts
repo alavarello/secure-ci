@@ -13,7 +13,7 @@ const ALWAYS_FALSE_AUTHORIZER_ID = 2;
 const DOMAIN = "secureci.xyz";
 const CHAIN_ID = 1;
 
-describe.only("Registry", function () {
+describe("Registry", function () {
   let owner: HardhatEthersSigner;
   let addresses: HardhatEthersSigner[];
   let sciRegistry: SCIRegistry;
