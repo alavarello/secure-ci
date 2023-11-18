@@ -7,8 +7,6 @@ import {
   afterAll
 } from "matchstick-as/assembly/index"
 import { BigInt, Address } from "@graphprotocol/graph-ts"
-import { AddressesAddedToDomain } from "../generated/schema"
-import { AddressesAddedToDomain as AddressesAddedToDomainEvent } from "../generated/SCIRegistry/SCIRegistry"
 import { handleAddressesAddedToDomain } from "../src/sci-registry"
 import { createAddressesAddedToDomainEvent } from "./sci-registry-utils"
 

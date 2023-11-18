@@ -27,6 +27,7 @@ const { chains, publicClient, webSocketPublicClient } = configureChains(
   [
     mainnet,
     sepolia,
+    goerli,
     hardhat,
   ],
   [publicProvider()]

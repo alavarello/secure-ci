@@ -1,17 +1,17 @@
 type Domain @entity {
   id: ID!
   domainOwner: Bytes! # address
-  contractAddresses: [Contract!]! # address[]
+  contracts: [WhitelistEvent!]! @derivedFrom(field: "domain")
 }
 
 type Contract @entity {
     id: ID!
     chainId: BigInt! # uint256
     address: Bytes! # address
-    domains: [Domain!]! # domains
+    domains: [WhitelistEvent!]! @derivedFrom(field: "contract")
 }
 
-type WhitelistEvent @entity(immutable: true) {
+type WhitelistEvent @entity {
     id: ID!
     contract: Contract!
     domain: Domain!

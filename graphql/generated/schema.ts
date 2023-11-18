@@ -63,17 +63,12 @@ export class Domain extends Entity {
     this.set("domainOwner", Value.fromBytes(value));
   }
 
-  get contractAddresses(): Array<string> {
-    let value = this.get("contractAddresses");
-    if (!value || value.kind == ValueKind.NULL) {
-      throw new Error("Cannot return null for a required field.");
-    } else {
-      return value.toStringArray();
-    }
-  }
-
-  set contractAddresses(value: Array<string>) {
-    this.set("contractAddresses", Value.fromStringArray(value));
+  get contracts(): WhitelistEventLoader {
+    return new WhitelistEventLoader(
+      "Domain",
+      this.get("id")!.toString(),
+      "contracts"
+    );
   }
 }
 
@@ -142,17 +137,12 @@ export class Contract extends Entity {
     this.set("address", Value.fromBytes(value));
   }
 
-  get domains(): Array<string> {
-    let value = this.get("domains");
-    if (!value || value.kind == ValueKind.NULL) {
-      throw new Error("Cannot return null for a required field.");
-    } else {
-      return value.toStringArray();
-    }
-  }
-
-  set domains(value: Array<string>) {
-    this.set("domains", Value.fromStringArray(value));
+  get domains(): WhitelistEventLoader {
+    return new WhitelistEventLoader(
+      "Contract",
+      this.get("id")!.toString(),
+      "domains"
+    );
   }
 }
 
@@ -273,5 +263,23 @@ export class WhitelistEvent extends Entity {
 
   set blockTimestamp(value: BigInt) {
     this.set("blockTimestamp", Value.fromBigInt(value));
+  }
+}
+
+export class WhitelistEventLoader extends Entity {
+  _entity: string;
+  _field: string;
+  _id: string;
+
+  constructor(entity: string, id: string, field: string) {
+    super();
+    this._entity = entity;
+    this._id = id;
+    this._field = field;
+  }
+
+  load(): WhitelistEvent[] {
+    let value = store.loadRelated(this._entity, this._id, this._field);
+    return changetype<WhitelistEvent[]>(value);
   }
 }
