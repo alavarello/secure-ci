@@ -6,22 +6,25 @@ import {JsonRpcRequest} from "@cowprotocol/widget-lib/types";
 
 class WalletProviderProxy implements EthereumProvider {
     constructor(private readonly provider: BrowserProvider) {
-
     }
 
     request<T>(params: JsonRpcRequest): Promise<T> {
+        console.log("request called123")
+        console.log(params);
         return this.provider.send(params.method, params.params);
     }
 
     enable(): Promise<void> {
+        console.log("enable called123")
         return Promise.resolve();
     }
 
     on(event: string, args: unknown): void {
+        console.log("on called123")
     }
 }
 
-export function walletClientToCowswapProvider(walletClient: WalletClient): EthereumProvider {
+function walletClientToCowswapProvider(walletClient: WalletClient): EthereumProvider {
     const { account, chain, transport } = walletClient
     const network = {
         chainId: chain.id,
