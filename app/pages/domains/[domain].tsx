@@ -48,6 +48,8 @@ const Domain: NextPage = () => {
         throw new Error('Function not implemented.');
     }
 
+    if(!domain) return;
+
 return (
     <>
     <Modal>
