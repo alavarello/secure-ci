@@ -1,6 +1,6 @@
 import {configureChains, createConfig, mainnet, WagmiConfig} from "wagmi";
 import { publicProvider } from 'wagmi/providers/public';
-import {getDefaultWallets, RainbowKitProvider} from "@rainbow-me/rainbowkit";
+import {AvatarComponent, getDefaultWallets, RainbowKitProvider} from "@rainbow-me/rainbowkit";
 import '@rainbow-me/rainbowkit/styles.css';
 import {hardhat} from "viem/chains";
 import {goerli, sepolia} from "wagmi/chains";
@@ -28,9 +28,20 @@ const wagmiConfig = createConfig({
     webSocketPublicClient,
 });
 
+const CustomAvatar: AvatarComponent = () => {
+    return  (
+      <img
+        src={'https://noun-api.com/beta/pfp'}
+        width={32}
+        height={32}
+        style={{ borderRadius: 999 }}
+      />
+    )
+  };
+
 function ConnectButtonProvider({children}: {children: ReactNode}) {
     return <WagmiConfig config={wagmiConfig}>
-        <RainbowKitProvider chains={chains}>
+        <RainbowKitProvider chains={chains} avatar={CustomAvatar}>
             {children}
         </RainbowKitProvider>
     </WagmiConfig>
