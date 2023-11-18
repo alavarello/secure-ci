@@ -17,5 +17,4 @@ interface ISecureCIRegistry {
     uint256 chainId,
     address[] calldata addresses
   ) external;
-
 }
