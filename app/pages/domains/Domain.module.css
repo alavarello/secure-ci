@@ -1,0 +1,32 @@
+.main {
+  min-height: 80vh;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.verifiedContainer {
+    flex: 1 1 auto;
+    flex-direction: column;
+    box-sizing: content-box;
+    display: flex;
+    margin: 4rem 4rem 4rem 4rem;
+    width: 80%;
+}
+
+.verifyCardContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 2rem;
+    padding: 2rem;
+}
+
+.tableTitle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}

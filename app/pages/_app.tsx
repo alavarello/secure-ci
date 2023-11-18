@@ -17,6 +17,8 @@ import { publicProvider } from 'wagmi/providers/public';
 import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
 import { EASProvider } from '../stores/eas';
+import { QueryClient, QueryClientProvider } from 'react-query'
+import { useState } from 'react';
 
 const { chains, publicClient, webSocketPublicClient } = configureChains(
   [
@@ -45,17 +47,31 @@ const wagmiConfig = createConfig({
 });
 
 function MyApp({ Component, pageProps }: AppProps) {
+  const [queryClient] = useState(
+    () =>
+      new QueryClient({
+        defaultOptions: {
+          queries: {
+            refetchOnWindowFocus: false,
+            retry: false,
+          },
+        },
+      }),
+  )
+
   return (
-    <WagmiConfig config={wagmiConfig}>
-      <RainbowKitProvider chains={chains}>
-        <EASProvider>
-          <CssBaseline />
-          <Header/>
-          <Component {...pageProps} />
-          <Footer />
-        </EASProvider>
-      </RainbowKitProvider>
-    </WagmiConfig>
+    <QueryClientProvider client={queryClient}>
+      <WagmiConfig config={wagmiConfig}>
+        <RainbowKitProvider chains={chains}>
+          <EASProvider>
+            <CssBaseline />
+            <Header/>
+            <Component {...pageProps} />
+            <Footer />
+          </EASProvider>
+        </RainbowKitProvider>
+      </WagmiConfig>
+    </QueryClientProvider>
   );
 }
 
