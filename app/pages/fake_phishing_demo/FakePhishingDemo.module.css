@@ -1,7 +1,36 @@
-.main {
-  width: 100%;
+.container {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background: url('/scam_bg.png') no-repeat center center;
+  background-size: cover;
+}
+
+.trippyImage {
+  max-width: 50%;
+  height: auto;
+  margin-bottom: 20px;
+}
+
+.button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #0019a2;
+  color: white;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.button:hover {
+  background-color: #001171;
+  transform: scale(1.1);
+}
+
+.button:active {
+  transform: scale(0.9);
 }

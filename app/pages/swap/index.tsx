@@ -1,14 +1,13 @@
 
 import { CowSwapWidget, CowSwapWidgetParams, TradeType } from '@cowprotocol/widget-react'
-import {GetServerSideProps, NextPage} from "next";
+import { NextPage } from "next";
 import styles from './Swap.module.css';
 import {useCowswapProvider} from "../../hooks/useCowswapProvider";
 import {useEffect, useState} from "react";
-import {useConnectedAddress} from "../../hooks/useConnectedAddress";
 import {useChainId} from "../../hooks/useChainId";
-import {useRouter} from "next/router";
 import {useQuery} from "react-query";
 import {getDomainsByContractAddress, getDomainWhitelistedAddresses} from "../../queries/domains";
+
 const cowParams: CowSwapWidgetParams = {
     "appCode": "secureCI COWSwap Integration",
     "width": "420px",
@@ -36,7 +35,7 @@ const Swap: NextPage = () => {
     useEffect(() => {
         setDomain(window.location.hostname);
     }, []);
-    
+
     const { data: whiteListedDomains, isLoading } = useQuery(
         ['getDomainsByContract', contractAddress],
         () => getDomainsByContractAddress(contractAddress)
