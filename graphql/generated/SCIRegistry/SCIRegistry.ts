@@ -31,8 +31,8 @@ export class AddressesAddedToDomain__Params {
     return this._event.parameters[1].value.toAddress();
   }
 
-  get domain(): Bytes {
-    return this._event.parameters[2].value.toBytes();
+  get domain(): string {
+    return this._event.parameters[2].value.toString();
   }
 
   get chainId(): BigInt {

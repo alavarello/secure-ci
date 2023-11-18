@@ -6,9 +6,9 @@ dataSources:
     name: SCIRegistry
     network: goerli
     source:
-      address: "0x33b3e6Fb7EFAB879f1cA89Fb0D780e5832e6Fe2C"
+      address: "0x33fB6e0ccdB2d3789351087dD077Ad1Ed7bAdAAf"
       abi: SCIRegistry
-      startBlock: 10065572
+      startBlock: 10065958
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -21,7 +21,7 @@ dataSources:
         - name: SCIRegistry
           file: SCIRegistry/abis/SCIRegistry.json
       eventHandlers:
-        - event: AddressesAddedToDomain(uint256,indexed address,indexed string,indexed
+        - event: AddressesAddedToDomain(indexed uint256,indexed address,string,indexed
             uint256,address[])
           handler: handleAddressesAddedToDomain
       file: SCIRegistry/SCIRegistry.wasm
