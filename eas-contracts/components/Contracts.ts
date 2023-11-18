@@ -2,7 +2,8 @@ import { ContractFactory, Signer } from 'ethers';
 import { ethers } from 'hardhat';
 import { ABI } from 'hardhat-deploy/types';
 import {
-  ReportSchemaResolver__factory,
+  ReportContractSchemaResolver__factory,
+  ReportDomainSchemaResolver__factory,
   AttestationResolver__factory,
   AttesterResolver__factory,
   DataResolver__factory,
@@ -83,7 +84,8 @@ export const attachOnly = <F extends ContractFactory>(
 const getContracts = (signer?: Signer) => ({
   connect: (signer: Signer) => getContracts(signer),
 
-  ReportSchemaResolver: deployOrAttach(ReportSchemaResolver__factory, signer),
+  ReportContractSchemaResolver: deployOrAttach(ReportContractSchemaResolver__factory, signer),
+  ReportDomainSchemaResolver: deployOrAttach(ReportDomainSchemaResolver__factory, signer),
   AttestationResolver: deployOrAttach(AttestationResolver__factory, signer),
   AttesterResolver: deployOrAttach(AttesterResolver__factory, signer),
   DataResolver: deployOrAttach(DataResolver__factory, signer),

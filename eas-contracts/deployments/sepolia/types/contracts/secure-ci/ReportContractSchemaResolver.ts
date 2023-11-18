@@ -60,7 +60,7 @@ export type AttestationStructOutput = [
   data: string;
 };
 
-export interface ReportSchemaResolverInterface extends Interface {
+export interface ReportContractSchemaResolverInterface extends Interface {
   getFunction(
     nameOrSignature:
       | "attest"
@@ -122,11 +122,11 @@ export namespace ContractReportedEvent {
   export type LogDescription = TypedLogDescription<Event>;
 }
 
-export interface ReportSchemaResolver extends BaseContract {
-  connect(runner?: ContractRunner | null): ReportSchemaResolver;
+export interface ReportContractSchemaResolver extends BaseContract {
+  connect(runner?: ContractRunner | null): ReportContractSchemaResolver;
   waitForDeployment(): Promise<this>;
 
-  interface: ReportSchemaResolverInterface;
+  interface: ReportContractSchemaResolverInterface;
 
   queryFilter<TCEvent extends TypedContractEvent>(
     event: TCEvent,

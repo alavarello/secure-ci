@@ -6,7 +6,7 @@ import path from 'path';
 import { BaseContract, Interface, Signer } from 'ethers';
 import { config, deployments, ethers, getNamedAccounts } from 'hardhat';
 import { ABI, Address, DeployFunction, Deployment as DeploymentData } from 'hardhat-deploy/types';
-import { EAS, EIP712Proxy, Indexer, ReportSchemaResolver, SchemaRegistry } from '../components/Contracts';
+import { EAS, EIP712Proxy, Indexer, ReportContractSchemaResolver, ReportDomainSchemaResolver, SchemaRegistry } from '../components/Contracts';
 import Logger from './Logger';
 import { DeploymentNetwork } from './Constants';
 
@@ -31,7 +31,8 @@ const maxFee = MAX_FEE ? BigInt(MAX_FEE) : undefined;
 const maxPriorityFee = MAX_PRIORITY_FEE ? BigInt(MAX_PRIORITY_FEE) : undefined;
 
 export enum NewInstanceName {
-  ReportSchemaResolver = 'ReportSchemaResolver',
+  ReportContractSchemaResolver = 'ReportContractSchemaResolver',
+  ReportDomainSchemaResolver = 'ReportDomainSchemaResolver',
   EAS = 'EAS',
   SchemaRegistry = 'SchemaRegistry',
   EIP712Proxy = 'EIP712Proxy',
@@ -49,7 +50,8 @@ const deployed = <F extends BaseContract>(name: InstanceName) => ({
 });
 
 const DeployedNewContracts = {
-  ReportSchemaResolver: deployed<ReportSchemaResolver>(InstanceName.ReportSchemaResolver),
+  ReportContractSchemaResolver: deployed<ReportContractSchemaResolver>(InstanceName.ReportContractSchemaResolver),
+  ReportDomainSchemaResolver: deployed<ReportDomainSchemaResolver>(InstanceName.ReportDomainSchemaResolver),
   EAS: deployed<EAS>(InstanceName.EAS),
   SchemaRegistry: deployed<SchemaRegistry>(InstanceName.SchemaRegistry),
   EIP712Proxy: deployed<EIP712Proxy>(InstanceName.EIP712Proxy),

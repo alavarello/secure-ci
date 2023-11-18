@@ -5,10 +5,6 @@ import { deploy, DeployedContracts, InstanceName, setDeploymentMetadata } from '
 const func: DeployFunction = async ({ getNamedAccounts }: HardhatRuntimeEnvironment) => {
   const { deployer } = await getNamedAccounts();
 
-  // const eas = DeployedContracts.EAS.deployed();
-
-  // console.debug(`EAS ${eas}`);
-
   if (!process.env.EAS_ADDRESS) {
     console.error('Missing EAS_ADDRESS in .env');
     return false;
@@ -20,7 +16,7 @@ const func: DeployFunction = async ({ getNamedAccounts }: HardhatRuntimeEnvironm
   }
 
   const deployedAddress = await deploy({
-    name: InstanceName.ReportSchemaResolver,
+    name: InstanceName.ReportContractSchemaResolver,
     from: deployer,
     args: [
       process.env.EAS_ADDRESS,
@@ -28,9 +24,9 @@ const func: DeployFunction = async ({ getNamedAccounts }: HardhatRuntimeEnvironm
     ],
   });
 
-  const ReportSchemaResolver = DeployedContracts.ReportSchemaResolver.deployed();
+  const ReportContractSchemaResolver = await DeployedContracts.ReportContractSchemaResolver.deployed();
 
-  console.log(`ReportSchemaResolver deployed ${deployedAddress} ${ReportSchemaResolver}`);
+  console.log(`ReportContractSchemaResolver deployed ${deployedAddress} ${ReportContractSchemaResolver}`);
 
   return true;
 };

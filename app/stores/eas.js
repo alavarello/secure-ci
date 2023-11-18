@@ -8,6 +8,11 @@ const reportContractSchema = {
   schemaEncoder: new SchemaEncoder("uint256 chainId, address contractAddress"),
 }
 
+const reportDomainSchema = {
+  uid: '0xca272f6da4ba9af1f159c0a6b8f784ad8d058dfe08b67a4cf45d3aa064b67759',
+  schemaEncoder: new SchemaEncoder("string domainName"),
+}
+
 export function publicClientToProvider(publicClient) {
   const { chain, transport } = publicClient;
   const network = {
@@ -86,6 +91,7 @@ export function useProvider() {
 export const EASContext = createContext({
   eas: undefined,
   reportContract: (chainId, contractAddress) => console.debug('reportContract', chainId, contractAddress),
+  reportDomain: (domainName) => console.debug('reportDomain', domainName),
   attesting: false,
   error: null,
 });
@@ -110,7 +116,6 @@ export function EASProvider({
   }, [signer]);
 
   const reportContract = useCallback((chainId, contractAddress) => {
-    console.debug('attest on eas', eas);
     if (!eas) {
       console.error('There is not EAS');
       return;
@@ -151,10 +156,51 @@ export function EASProvider({
     );
   }, [eas]);
 
+  const reportDomain = useCallback((domainName) => {
+    if (!eas) {
+      console.error('There is not EAS');
+      return;
+    }
+    const encodedData = reportDomainSchema.schemaEncoder.encodeData([
+      { name: "domainName", value: domainName, type: "string" },
+    ]);
+    const attestation = {
+      schema: reportContractSchema.uid,
+      data: {
+        expirationTime: 0,
+        revocable: true,
+        data: encodedData,
+      },
+    };
+    setAttesting(true);
+    eas.attest(attestation).then(
+      (tx) => {
+        console.debug('attested tx', tx);
+        tx.wait().then(
+          (newAttestationUID) => {
+            console.debug('newAttestationUID', newAttestationUID);
+            setAttesting(false);
+          },
+          (err) => {
+            console.error('EAS tx wait', err);
+            setError(err);
+            setAttesting(false);
+          },
+        );
+      },
+      (err) => {
+        console.error('EAS attest failed', err);
+        setError(err);
+        setAttesting(false);
+      },
+    );
+  }, [eas])
+
   return (
     <EASContext.Provider value={{
       eas,
       reportContract,
+      reportDomain,
       attesting,
       error,
     }}>
