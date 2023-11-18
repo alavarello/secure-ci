@@ -28,12 +28,12 @@ export async function getReportsByContract(chainId, contractAddress) {
       AND: [
         {
           decodedDataJson: {
-            contains: "{\"name\":\"chainId\",\"type\":\"uint256\",\"value\":{\"type\":\"BigNumber\",\"hex\":\"${toBeHex(chainId)}\"}}"
+            contains: "{\\"name\\":\\"chainId\\",\\"type\\":\\"uint256\\",\\"value\\":{\\"type\\":\\"BigNumber\\",\\"hex\\":\\"${toBeHex(chainId)}\\"}}"
           }
         },
         {
           decodedDataJson: {
-            contains: "{\"name\":\"contractAddress\",\"type\":\"address\",\"value\":\"${contractAddress}\"}"
+            contains: "{\\"name\\":\\"contractAddress\\",\\"type\\":\\"address\\",\\"value\\":\\"${contractAddress}\\"}"
           }
         }
       ]
@@ -58,7 +58,7 @@ export async function getReportsByDomainName(domainName) {
         equals: "${reportDomainSchema.uid}"
       }
       decodedDataJson: {
-        contains: "{\"name\":\"domainName\",\"type\":\"string\",\"value\":\"${domainName}\"}"
+        contains: "{\\"name\\":\\"domainName\\",\\"type\\":\\"string\\",\\"value\\":\\"${domainName}\\"}"
       }
     }) {
       _count {

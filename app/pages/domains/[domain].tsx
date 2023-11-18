@@ -1,7 +1,7 @@
 import type { NextPage } from 'next';
 import styles from './Domain.module.css';
 import { useRouter } from 'next/router';
-import { Button, Card } from '@mui/material';
+import { Button, Card, Typography } from '@mui/material';
 import { AddressesTable } from '../../components/AddressTable/AddressTable';
 import { useModalContext } from '../../components/Modal/Modal.provider';
 import Modal from '../../components/Modal/Modal';
@@ -23,13 +23,16 @@ import ReportDomainButton from '../../components/ReportButton/attest-report-doma
 import ReportsDomain from '../../components/Reports/reports-domain';
 import { getDomainWhitelistedAddresses } from '../../queries/domains';
 import { useQuery } from 'react-query';
+import { useChainId } from '../../hooks/useChainId';
 
 const Domain: NextPage = () => {
   const router = useRouter()
   const { openModal } = useModalContext()
   const { domain } = router.query
   const { address } = useConnectedAddress()
+  const { chainId: originalChainId } = useChainId()
   const sciRegistry = useSCIRegistry();
+  const [chainId, setChainId] = React.useState(originalChainId)
 
   const { data: whiteListedAddresses } = useQuery(
     ['getWhitelistedContracts', domain],
@@ -49,7 +52,9 @@ const Domain: NextPage = () => {
   }
 
     function handleChange(event: SelectChangeEvent<'Chain'>, child: React.ReactNode): void {
-        throw new Error('Function not implemented.');
+        if (/^[0-9]+$/.test(String(event.target.value))) {
+            setChainId(parseInt(event.target.value))
+        }
     }
 
     if(!domain) return;
@@ -70,8 +75,10 @@ return (
                     </a>
                     </div>
                     <div className={styles.tableTitle}>
-                        <h4 className={styles.h4}>Addresses</h4>
-                        <Button onClick={openModal}>Whitelist new addresses</Button>
+                    <h4 className={styles.h4}>Addresses</h4>
+                    <Button onClick={openModal} className={styles.nicerButton}> 
+                    Whitelist new addresses
+                    </Button>
                     </div>
                     <div className={styles.blockchainContainer}>
                     <Box className={styles.blockchains} sx={{ maxWidth: 180 }}>
@@ -83,22 +90,26 @@ return (
         value="Chain"
         label="Chain"
         onChange={handleChange}>
-        <MenuItem value={10}>Mainnet</MenuItem>
-        <MenuItem value={20}>Arbitrum</MenuItem>
-        <MenuItem value={30}>Polygon</MenuItem>
-        <MenuItem value={40}>Sepolia</MenuItem>
-        <MenuItem value={50}>Goerli</MenuItem>
+        <MenuItem selected={chainId == 1} value={1}>Mainnet</MenuItem>
+        <MenuItem selected={chainId == 42161} value={42161}>Arbitrum</MenuItem>
+        <MenuItem selected={chainId == 137} value={137}>Polygon</MenuItem>
+        <MenuItem selected={chainId == 11155111} value={11155111}>Sepolia</MenuItem>
+        <MenuItem selected={chainId == 5} value={5}>Goerli</MenuItem>
         </Select>
     </FormControl>
     </Box>
     </div>
+    <div>
     <div className= {styles.h4}>
                     <AddressesTable
+                        chainId={1} // FIXME
                         addresses={whiteListedAddresses?.contracts.map(val => val.address) ?? []}
                         canMutate={whiteListedAddresses?.domainOwner === address}
                     />
+                    </div>
+                </div>
                     <div>
-                        <ReportDomainButton
+                        <ReportDomainButton 
                             // @ts-ignore
                             domainName={domain}
                         />
@@ -107,7 +118,6 @@ return (
                             domainName={domain}
                         />
                     </div>
-                </div> 
                 </div> 
                 : 
                 <Card className={styles.verifyCardContainer}>

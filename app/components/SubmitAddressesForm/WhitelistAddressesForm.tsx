@@ -44,11 +44,14 @@ export const WhitelistAddressesForm = () => {
                 },
             }}
             multiline
-            rows={2}
+            rows={12}
             maxRows={Infinity}
         />
-        <Button type="submit" >Whitelist</Button>
+
       </form>
+      <Button type="submit" className={styles.modalButton}> 
+                    Whitelist new addresses
+                    </Button>
     </Card>
   )
 }

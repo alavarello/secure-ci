@@ -5,13 +5,8 @@ import { getDefaultWallets, RainbowKitProvider } from '@rainbow-me/rainbowkit';
 import type { AppProps } from 'next/app';
 import { configureChains, createConfig, WagmiConfig } from 'wagmi';
 import {
-    arbitrum,
     goerli,
     mainnet,
-    optimism,
-    polygon,
-    base,
-    zora,
     hardhat,
     sepolia,
 } from 'wagmi/chains';
@@ -22,6 +17,7 @@ import { EASProvider } from '../stores/eas';
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { useState } from 'react';
 import ModalContextProvider from '../components/Modal/Modal.provider';
+import {StyledEngineProvider} from "@mui/material";
 
 const { chains, publicClient, webSocketPublicClient } = configureChains(
   [
@@ -64,12 +60,14 @@ function MyApp({ Component, pageProps }: AppProps) {
       <WagmiConfig config={wagmiConfig}>
         <RainbowKitProvider chains={chains}>
           <EASProvider>
-            <CssBaseline />
-            <ModalContextProvider>
-              <Header/>
-              <Component {...pageProps} />
-              <Footer />
-            </ModalContextProvider>
+            <StyledEngineProvider injectFirst>
+                <CssBaseline />
+                <ModalContextProvider>
+                  <Header/>
+                  <Component {...pageProps} />
+                  <Footer />
+                </ModalContextProvider>
+            </StyledEngineProvider>
           </EASProvider>
         </RainbowKitProvider>
       </WagmiConfig>

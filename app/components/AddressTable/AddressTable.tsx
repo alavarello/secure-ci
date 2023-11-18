@@ -1,11 +1,14 @@
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
+import ReportContractButton from "../ReportButton/attest-report-contract";
+import ReportsContract from "../Reports/reports-contract";
 
 interface AddressTableProps {
+    chainId: number
     addresses: string[]
     canMutate: boolean
   }
 
-export const AddressesTable: React.FC<AddressTableProps> = ({ addresses, canMutate }) => {
+export const AddressesTable: React.FC<AddressTableProps> = ({ chainId = 1, addresses, canMutate }) => {
 
     const handleRemove = (address: string) => {
         console.log('Removeing address', address)
@@ -23,6 +26,16 @@ export const AddressesTable: React.FC<AddressTableProps> = ({ addresses, canMuta
               >
                 <TableCell component="th" scope="row">
                   {address}
+                </TableCell>
+                <TableCell>
+                        <ReportContractButton
+                          chainId={chainId}
+                          contractAddress={address}
+                        />
+                        <ReportsContract
+                          chainId={chainId}
+                          contractAddress={address}
+                        />
                 </TableCell>
                 {canMutate && <TableCell align="right" onClick={() => handleRemove(address)}>X</TableCell>} 
               </TableRow>

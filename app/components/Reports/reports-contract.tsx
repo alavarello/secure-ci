@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import styles from './Reports.module.css';
-import { getReportsByContract } from '../../utils/eas';
+import { EASContext } from '../../stores/eas';
 
 function ReportsContract({
   chainId,
@@ -9,38 +9,32 @@ function ReportsContract({
   chainId: number,
   contractAddress: string,
 }) {
-  const [reports, setReports] = useState(0)
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState(null)
+  const { loadReportsByContract, getReportByContract, getContractError, isContractLoading } = useContext(EASContext);
 
   useEffect(() => {
-    setLoading(false)
-    getReportsByContract(chainId, contractAddress).then(
-      (reports) => {
-        setReports(reports)
-        setLoading(false)
-      },
-      (err) => {
-        setError(err)
-        setLoading(false)
-      }
-    )
-  }, [getReportsByContract])
+    loadReportsByContract(chainId, contractAddress)
+  }, [loadReportsByContract, chainId, contractAddress])
+
+  const error = getContractError(chainId, contractAddress)
 
   if (error) {
     return <p>Could not fetch contact reports: {`${error}`}</p>;
   }
 
+  const loading = isContractLoading(chainId, contractAddress)
+
   if (loading) {
     return <progress />;
   }
+
+  const reports = getReportByContract(chainId, contractAddress)
 
   if (reports === 0) {
     return null;
   }
 
   return (
-    <p className={styles.warning}>Warning: contract has been flagged ${reports} times.</p>
+    <p className={styles.warning}>Warning: contract has been flagged {reports} times.</p>
   )
 }
 

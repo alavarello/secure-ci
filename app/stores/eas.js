@@ -2,7 +2,7 @@ import { createContext, useCallback, useEffect, useState } from 'react';
 import { EAS, SchemaEncoder } from '@ethereum-attestation-service/eas-sdk';
 import { FallbackProvider, JsonRpcProvider, BrowserProvider, ZeroAddress } from 'ethers';
 import { usePublicClient, useWalletClient } from 'wagmi';
-import { reportContractSchema, reportDomainSchema } from '../utils/eas';
+import { getReportsByContract, getReportsByDomainName, reportContractSchema, reportDomainSchema } from '../utils/eas';
 
 const reportContractSchemaEncoder = new SchemaEncoder("uint256 chainId, address contractAddress");
 const reportDomainSchemaEncoder = new SchemaEncoder("string domainName");
@@ -88,6 +88,14 @@ export const EASContext = createContext({
   reportDomain: (domainName) => console.debug('reportDomain', domainName),
   attesting: false,
   error: null,
+  loadReportsByContract: (chainId, contractAddress) => console.debug('loadReportsByContract', chainId, contractAddress),
+  loadReportsByDomain: (domainName) => console.debug('loadReportsByDomain', domainName),
+  getReportByContract: (chainId, contractAddress) => 0,
+  getReportByDomain: (domainName) => 0,
+  isContractLoading: (chainId, contractAddress) => false,
+  isDomainLoading: (domainName) => false,
+  getContractError: (chainId, contractAddress) => null,
+  getDomainError: (domainName) => null,
 });
 
 export function EASProvider({
@@ -98,6 +106,58 @@ export function EASProvider({
   const [eas, setEAS] = useState(undefined);
   const [attesting, setAttesting] = useState(false);
   const [error, setError] = useState(null);
+  const [reports, setReports] = useState({})
+  const [loading, setLoading] = useState({})
+  const [errors, setErrors] = useState({})
+
+  const setReport = (k, v) => setReports((p) => ({ ...p, [k]: v }))
+
+  const addLoading = (k) => setLoading((p) => ({ ...p, [k]: true }))
+  const delLoading = (k) => setLoading((p) => ({ ...p, [k]: false }))
+
+  const addError = (k, e) => setErrors((p) => ({ ...p, [k]: e }))
+  const delError = (k) => setErrors((p) => ({ ...p, [k]: null }))
+
+  const loadReportsByContract = useCallback((chainId, contractAddress) => {
+    const k = `c-${chainId}-${contractAddress}`
+    addLoading(k)
+    delError(k)
+    getReportsByContract(chainId, contractAddress).then(
+      (reports) => {
+        setReport(k, reports)
+        delLoading(k)
+      },
+      (err) => {
+        addError(k, err)
+        delLoading(k)
+      }
+    )
+  }, [getReportsByContract])
+
+  const loadReportsByDomain = useCallback((domainName) => {
+    const k = `d-${domainName}`
+    addLoading(k)
+    delError(k)
+    getReportsByDomainName(domainName).then(
+      (reports) => {
+        setReport(k, reports)
+        delLoading(k)
+      },
+      (err) => {
+        addError(k, err)
+        delLoading(k)
+      }
+    )
+  }, [getReportsByDomainName])
+
+  const getReportByContract = useCallback((chainId, contractAddress) => reports[`c-${chainId}-${contractAddress}`] ?? 0, [reports])
+  const getReportByDomain = useCallback((domainName) => reports[`d-${domainName}`] ?? 0, [reports])
+
+  const isContractLoading = useCallback((chainId, contractAddress) => loading[`c-${chainId}-${contractAddress}`] ?? false, [loading])
+  const isDomainLoading = useCallback((domainName) => loading[`d-${domainName}`] ?? false, [loading])
+
+  const getContractError = useCallback((chainId, contractAddress) => errors[`c-${chainId}-${contractAddress}`] ?? null, [errors])
+  const getDomainError = useCallback((domainName) => errors[`d-${domainName}`] ?? null, [errors])
 
   useEffect(() => {
     console.debug('signer', signer);
@@ -136,6 +196,7 @@ export function EASProvider({
           (newAttestationUID) => {
             console.debug('newAttestationUID', newAttestationUID);
             setAttesting(false);
+            loadReportsByContract(chainId, contractAddress)
           },
           (err) => {
             console.error('EAS tx wait', err);
@@ -150,7 +211,7 @@ export function EASProvider({
         setAttesting(false);
       },
     );
-  }, [eas]);
+  }, [eas, loadReportsByContract]);
 
   const reportDomain = useCallback((domainName) => {
     if (!eas) {
@@ -177,6 +238,7 @@ export function EASProvider({
           (newAttestationUID) => {
             console.debug('newAttestationUID', newAttestationUID);
             setAttesting(false);
+            loadReportsByDomain(domainName)
           },
           (err) => {
             console.error('EAS tx wait', err);
@@ -191,7 +253,7 @@ export function EASProvider({
         setAttesting(false);
       },
     );
-  }, [eas])
+  }, [eas, loadReportsByDomain])
 
   return (
     <EASContext.Provider value={{
@@ -200,6 +262,14 @@ export function EASProvider({
       reportDomain,
       attesting,
       error,
+      loadReportsByContract,
+      loadReportsByDomain,
+      getReportByContract,
+      getReportByDomain,
+      isContractLoading,
+      isDomainLoading,
+      getContractError,
+      getDomainError,
     }}>
       {children}
     </EASContext.Provider>

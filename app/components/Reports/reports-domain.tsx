@@ -1,44 +1,38 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import styles from './Reports.module.css';
-import { getReportsByDomainName } from '../../utils/eas';
+import { EASContext } from '../../stores/eas';
 
 function ReportsDomain({
   domainName,
 }: {
   domainName: string,
 }) {
-  const [reports, setReports] = useState(0)
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState(null)
+  const { loadReportsByDomain, getReportByDomain, getDomainError, isDomainLoading } = useContext(EASContext);
 
   useEffect(() => {
-    setLoading(false)
-    getReportsByDomainName(domainName).then(
-      (reports) => {
-        setReports(reports)
-        setLoading(false)
-      },
-      (err) => {
-        setError(err)
-        setLoading(false)
-      }
-    )
-  }, [getReportsByDomainName])
+    loadReportsByDomain(domainName)
+  }, [loadReportsByDomain, domainName])
+
+  const error = getDomainError(domainName)
 
   if (error) {
     return <p>Could not fetch domain reports: {`${error}`}</p>;
   }
 
+  const loading = isDomainLoading(domainName)
+
   if (loading) {
     return <progress />;
   }
+
+  const reports = getReportByDomain(domainName)
 
   if (reports === 0) {
     return null;
   }
 
   return (
-    <p className={styles.warning}>Warning: domain has been flagged ${reports} times.</p>
+    <p className={styles.warning}>Warning: domain has been flagged {reports} times.</p>
   )
 }
 
