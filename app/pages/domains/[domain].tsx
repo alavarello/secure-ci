@@ -1,12 +1,12 @@
-import type {NextPage} from 'next';
+import type { NextPage } from 'next';
 import styles from './Domain.module.css';
-import {useRouter} from 'next/router';
-import {Button, Divider, Grid} from '@mui/material';
-import {AddressesTable} from '../../components/AddressTable/AddressTable';
-import {useModalContext} from '../../components/Modal/Modal.provider';
-import Modal, {ModalProps} from '../../components/Modal/Modal';
+import { useRouter } from 'next/router';
+import { Button, Divider, Grid } from '@mui/material';
+import { AddressesTable } from '../../components/AddressTable/AddressTable';
+import { useModalContext } from '../../components/Modal/Modal.provider';
+import Modal from '../../components/Modal/Modal';
 import WhitelistAddressesForm from '../../components/SubmitAddressesForm/WhitelistAddressesForm';
-import {useConnectedAddress} from '../../hooks/useConnectedAddress';
+import { useConnectedAddress } from '../../hooks/useConnectedAddress';
 import * as React from 'react';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
@@ -18,10 +18,10 @@ import '@fontsource/lexend/500.css';
 import '@fontsource/lexend/700.css';
 import ReportDomainButton from '../../components/ReportButton/attest-report-domain';
 import ReportsDomain from '../../components/Reports/reports-domain';
-import {getDomainWhitelistedAddresses} from '../../queries/domains';
-import {useQuery} from 'react-query';
-import {useChainId} from '../../hooks/useChainId';
-import {FC, useEffect} from "react";
+import { getDomainWhitelistedAddresses } from '../../queries/domains';
+import { useQuery } from 'react-query';
+import { useChainId } from '../../hooks/useChainId';
+import { FC, useEffect } from "react";
 import SubscribeDomainButton from '../../components/SubscribeButton/subscribe-domain';
 import { sendNotification } from '../../utils/web3inbox';
 
@@ -148,7 +148,6 @@ const Domain: NextPage = () => {
                             <AddressesTable
                                 chainId={chainId}
                                 addresses={contracts.map(val => val.address) ?? []}
-                                canMutate={isDomainOwner}
                                 onRemove={onRemove}
                             />
                         </div>
