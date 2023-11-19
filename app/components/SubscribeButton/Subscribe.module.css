@@ -29,3 +29,17 @@
 .subscribe {
   margin: 4rem 0 2rem 0;
 }
+
+.suscribeToDomain {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 0.4rem
+}
+
+.youAreSuscribed {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

@@ -4,13 +4,12 @@ import styles from './Subscribe.module.css';
 import { useSignMessage } from 'wagmi'
 import {
   useManageSubscription,
-  useSubscription,
   useW3iAccount,
   useInitWeb3InboxClient,
-  useMessages
 } from '@web3inbox/widget-react'
 import { useCallback, useEffect, useState } from "react"
 import SubscribedMessages from "./subscribed-messages";
+import { Button } from "@mui/material";
 
 function SubscribeDomainButton({
   domainName,
@@ -94,11 +93,11 @@ function SubscribeDomainButton({
   return (
     <div className={styles.subscribe}>
     {!isAlreadyRegisted ? (
-      <div>
-        To manage notifications, sign and register an identity key:&nbsp;
-        <button className={styles.button} onClick={performRegistration} disabled={isRegistering}>
+      <div className={styles.suscribeToDomain}>
+        To manage notifications, sign and register an identity key&nbsp;
+        <Button onClick={performRegistration} disabled={isRegistering}>
           {isRegistering ? 'Registering...' : 'Register'}
-        </button>
+        </Button>
       </div>
     ) : (
       <>
@@ -106,13 +105,12 @@ function SubscribeDomainButton({
           <>
             {!isSubscribed ? (
               <>
-                <button className={styles.button} onClick={performSubscribe} disabled={isSubscribing}>
+                <Button onClick={performSubscribe} disabled={isSubscribing}>
                   {isSubscribing ? 'Subscribing...' : 'Subscribe to notifications'}
-                </button>
+                </Button>
               </>
             ) : (
               <>
-                <div>You are subscribed and will be receiving a message when <code>{domainName}</code> changes.</div>
                 <SubscribedMessages
                   // @ts-ignore
                   domainName={domainName}

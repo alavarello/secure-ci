@@ -37,6 +37,8 @@ function SubscribedMessages({
   return (
     <div className={styles.messages}>
     <h2 className={styles.h2}>Messages</h2>
+    {domainMessages.length === 0 &&  <div className={styles.youAreSuscribed}>{`You are subscribed and will be receiving a message when ${domainName} changes.`}</div>}
+    {domainMessages.length > 0 && 
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableBody>
@@ -73,6 +75,7 @@ function SubscribedMessages({
         </TableBody>
       </Table>
     </TableContainer>
+    }
     </div>
   )
 }
