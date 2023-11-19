@@ -1,4 +1,5 @@
 import React, {FC, ReactNode} from "react";
+import {AlertColor} from "@mui/material";
 
 export interface PopupContextType {
     props: PopupProps;
@@ -6,13 +7,15 @@ export interface PopupContextType {
 }
 
 export const PopupContext = React.createContext<PopupContextType>({
-  props: {open: false, content: <></>},
+  props: {open: false, content: <></>, severity: "error", title: "Error"},
   dispatchPopup: () => {},
 });
 
 export interface PopupProps {
     open: boolean;
     content: ReactNode;
+    severity: AlertColor;
+    title: string;
 }
 
 export const PopupReducer = (
@@ -30,7 +33,7 @@ export const PopupProvider: FC<MintingProviderProps> = (props) => {
 
   const [PopUpProps, dispatchPopup] = React.useReducer(
       PopupReducer,
-      {open: false, content: <></>}
+      {open: false, content: <></>, severity: "error", title: "Error"}
   );
 
   return <PopupContext.Provider

@@ -4,13 +4,18 @@ import {PopupContext} from "./PopupProvider";
 
 function Popup() {
 
-    const {props} = React.useContext(PopupContext);
-    const {open, content} = props;
+    const {props, dispatchPopup} = React.useContext(PopupContext);
+    const {open, content, severity, title} = props;
 
 
-    return <Snackbar message="Here is snackbar message" open={open} autoHideDuration={6000}>
-        <Alert severity="error">
-            <AlertTitle>Error</AlertTitle>
+    setTimeout(() => {
+        if(!open) return;
+        dispatchPopup({props: {open: false, content: <></>, severity: "error", title: "Error"}})
+    }, 6000)
+
+    return <Snackbar message="Here is snackbar message" open={open}>
+        <Alert severity={severity}>
+            <AlertTitle>{title}</AlertTitle>
             {content}
         </Alert>
     </Snackbar>

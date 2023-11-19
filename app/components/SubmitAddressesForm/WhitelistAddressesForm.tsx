@@ -51,7 +51,9 @@ export const WhitelistAddressesForm = ({
                 open: true,
                 content: <>
                     Ups there was an error sending your transaction. Please try again later
-                </>
+                </>,
+                severity: "error",
+                title: "Error"
             }})
         return
     }
