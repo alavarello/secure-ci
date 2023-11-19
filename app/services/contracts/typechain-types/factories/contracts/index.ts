@@ -3,5 +3,5 @@
 /* eslint-disable */
 export * as authorizers from "./Authorizers";
 export * as interfaces from "./interfaces";
-export { EnsAuthorizer__factory } from "./EnsAuthorizer__factory";
+export { FakeScam__factory } from "./FakeScam__factory";
 export { SCIRegistry__factory } from "./SCIRegistry__factory";

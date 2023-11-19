@@ -8,12 +8,20 @@
   background-size: cover;
 }
 
+.unsupported {
+  text-align: center;
+  color: white;
+  font-weight: bold;
+  text-shadow: 2px 2px 4px black;
+  background-color: black;
+  padding: 10px;
+}
+
 .trippyImage {
   max-width: 50%;
   height: auto;
   margin-bottom: 20px;
 }
-
 .button {
   padding: 10px 20px;
   border: none;
@@ -24,6 +32,29 @@
   font-weight: 700;
   cursor: pointer;
   transition: all 0.3s ease;
+  position: relative; /* Needed for the shine effect */
+  overflow: hidden; /* Keeps the shine effect within the button borders */
+}
+
+.button::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(to right, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0.8) 50%, rgba(255, 255, 255, 0.3) 100%);
+  transform: rotate(30deg);
+  transition: all 0.3s ease;
+  opacity: 0;
+}
+
+.button:hover::before {
+  top: -30%;
+  left: -30%;
+  width: 160%;
+  height: 160%;
+  opacity: 1;
 }
 
 .button:hover {
@@ -33,4 +64,14 @@
 
 .button:active {
   transform: scale(0.9);
+}
+
+@keyframes shine {
+  to {
+    left: 125%;
+  }
+}
+
+.button:hover::before {
+  animation: shine 1.5s infinite;
 }

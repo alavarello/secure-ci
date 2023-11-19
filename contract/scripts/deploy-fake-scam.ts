@@ -1,10 +1,10 @@
 import { ethers } from "hardhat";
 
 async function main() {
-    const DummyReceive = await ethers.deployContract("DummyReceive", [], {});
-    await DummyReceive.waitForDeployment();
-    const address = await DummyReceive.getAddress();
-    console.log(`DummyReceive deployed to ${address}`);
+    const FakeScam = await ethers.deployContract("FakeScam", [], {});
+    await FakeScam.waitForDeployment();
+    const address = await FakeScam.getAddress();
+    console.log(`FakeScam deployed to ${address}`);
 }
 
 main().catch((error) => {
