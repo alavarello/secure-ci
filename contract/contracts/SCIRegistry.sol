@@ -48,11 +48,11 @@ contract SCIRegistry is Ownable {
         authorizers[authorizerId] = authorizer;
     }
 
-    function isDomainWhitelisted(string calldata domainName) external returns (bool) {
+    function isDomainWhitelisted(string calldata domainName) external view returns (bool) {
         return hasDomainBeenWhitelisted[domainName];
     }
 
-    function hasContract(uint256 chainId, address contractAddress) external returns (bool) {
+    function hasContract(uint256 chainId, address contractAddress) external view returns (bool) {
         return hasContractBeenWhitelisted[chainId][contractAddress];
     }
 }

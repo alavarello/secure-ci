@@ -7,11 +7,11 @@ import { Authorizer } from "./interfaces/Authorizer.sol";
 import { ISecureCIRegistry } from "./interfaces/ISecureCIRegistry.sol";
 
 contract FakeSecureCIRegistry is ISecureCIRegistry {
-  function hasContract(uint256 chainId, address contractAddress) external view returns (bool) {
+  function hasContract(uint256 /*chainId*/, address /*contractAddress*/) external pure returns (bool) {
     return true;
   }
 
-  function isDomainWhitelisted(string memory domainName) external returns (bool) {
+  function isDomainWhitelisted(string memory /*domainName*/) external pure returns (bool) {
     return true;
   }
 

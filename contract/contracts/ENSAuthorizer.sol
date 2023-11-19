@@ -17,8 +17,8 @@ contract ENSAuthorizer is Authorizer {
     function isAuthorize(
         address sender,
         string memory domain,
-        uint256 chainId,
-        address[] calldata addresses
+        uint256 /*chainId*/,
+        address[] calldata /*addresses*/
     ) external returns (bool) {
         // Check if the domain exists in the verified mapping
         if (verified[domain] != address(0)) {
