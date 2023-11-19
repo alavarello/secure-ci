@@ -5,6 +5,7 @@ export async function sendNotification(domainName, chainId, address, title, body
       method: "POST",
       headers: {
         Authorization: 'Bearer 0eb2953b-6c71-456a-a8eb-c31afc85e6db',
+        'content-type': 'application/json',
       },
       body: JSON.stringify({
         notification: {
