@@ -66,3 +66,5 @@ Whitelist the contract addresses that interact with the interface in your domain
 
 When sending a transaction, MetaMask will show a verified icon when interating
 with such contracts from your domain.
+
+![Example of CoW Swap running verified pool](./secureci-snap-verified.jpg)
