@@ -4,10 +4,8 @@ async function main() {
   const registry = await ethers.deployContract("SCIRegistry", [], {});
   await registry.waitForDeployment();
 
-  const alwaysTrueAuthorizer = await ethers.deployContract("AlwaysTrueAuthorizer", [], {});
   const ensAuthorizer = await ethers.deployContract("ENSAuthorizer", ["0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e"], {});
 
-  registry.addAuthorizer(0, alwaysTrueAuthorizer.target);
   registry.addAuthorizer(1, ensAuthorizer.target);
 
   console.log(
