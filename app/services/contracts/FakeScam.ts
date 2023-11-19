@@ -3,7 +3,7 @@ import {FakeScam as Contract, FakeScam__factory as factory} from "./typechain-ty
 
 export class FakeScam  {
     private _contract: Contract;
-    private readonly address = '0x78Ce9f6cF980549b5876042F8393b3021617Eeb4';
+    private readonly address = '0xCCF9a3013fa35887C38965E17f600610a0349755';
 
     static async getContract(signerOrProvider: Signer | Provider): Promise<FakeScam> {
       let provider: Provider | undefined;
