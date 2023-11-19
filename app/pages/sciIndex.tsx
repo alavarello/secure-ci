@@ -15,7 +15,7 @@ const SCIHome = () => {
 
   const router = useRouter()
   const [domainToSearch, setDomainToSearch] = useState("");
-  useRandomBodyBackground();
+
   return (
     <div className={styles.container}>
       <Head>

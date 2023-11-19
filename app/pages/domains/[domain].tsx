@@ -59,7 +59,7 @@ const Domain: NextPage = () => {
     const [chainId, setChainId] = React.useState(originalChainId)
     const [isDomainOwner, setIsDomainOwner] = React.useState(false)
     const [contracts, setContracts] = React.useState<{chainId: string, address: string}[]>([])
-    useRandomBodyBackground();
+
     const {data: whiteListedAddresses, refetch: getWhitelistedContractsAgain} = useQuery(
         ['getWhitelistedContracts', domain],
         () => getDomainWhitelistedAddresses(domain as string)
