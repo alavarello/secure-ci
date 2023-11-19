@@ -119,7 +119,7 @@ const Domain: NextPage = () => {
                             </h2>
                         </a>
                     </div>
-                    {isDomainOwner && <div style={{position: "relative"}}>
+                    {(isDomainOwner || !whiteListedAddresses?.contracts) && <div style={{position: "relative"}}>
                         <Button onClick={openModal} className={styles.nicerButton}>
                             Whitelist new addresses
                         </Button>

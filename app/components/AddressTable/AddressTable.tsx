@@ -2,6 +2,7 @@ import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow
 import ReportContractButton from "../ReportButton/attest-report-contract";
 import ReportsContract from "../Reports/reports-contract";
 import DisplayAddress from "../DisplayAddress/DisplayAddress";
+import Typography from "@mui/material/Typography";
 
 interface AddressTableProps {
     chainId: number
@@ -27,6 +28,11 @@ export const AddressesTable: React.FC<AddressTableProps> = ({
         // TODO: Add request to back-end to remove address + re-render table values
         onRemove?.(address)
     }
+
+    if(addresses.length === 0) return <div
+        style={{width: "100%", justifyContent: "center", display: "flex"}}>
+        <Typography>There are not addresses for this domain for selected chain</Typography>
+    </div>
 
     return (
         <TableContainer component={Paper}>
