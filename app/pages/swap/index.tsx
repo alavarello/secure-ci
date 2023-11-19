@@ -14,12 +14,11 @@ const cowParams: CowSwapWidgetParams = {
     "height": "529px",
     "tradeType": TradeType.SWAP,
     "sell": {
-        "asset": "",
-        "amount": "100"
+        "asset": "ETH",
+        "amount": "0.0001"
     },
     "buy": {
-        "asset": "USDC",
-        "amount": "0"
+        "asset": "WETH",
     },
     "theme": "light", // light/dark or provide your own color palette
 }
