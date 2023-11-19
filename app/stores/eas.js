@@ -85,7 +85,10 @@ export function useProvider() {
 export const EASContext = createContext({
   eas: undefined,
   reportContract: (chainId, contractAddress) => console.debug('reportContract', chainId, contractAddress),
-  reportDomain: (domainName) => console.debug('reportDomain', domainName),
+  reportDomain: (domainName) => {
+    console.debug('reportDomain', domainName)
+    return Promise.resolve(null)
+  },
   attestingContract: false,
   attestingDomain: false,
   errorContract: null,
@@ -218,9 +221,10 @@ export function EASProvider({
     );
   }, [eas, loadReportsByContract]);
 
-  const reportDomain = useCallback((domainName) => {
+  const reportDomain = useCallback((domainName) => new Promise((resolve) => {
     if (!eas) {
       console.error('There is not EAS');
+      resolve(null);
       return;
     }
     const encodedData = reportDomainSchemaEncoder.encodeData([
@@ -245,11 +249,13 @@ export function EASProvider({
             console.debug('newAttestationUID', newAttestationUID);
             setAttestingDomain(false);
             loadReportsByDomain(domainName)
+            resolve(newAttestationUID);
           },
           (err) => {
             console.error('EAS tx wait', err);
             setErrorDomain(err);
             setAttestingDomain(false);
+            resolve(null);
           },
         );
       },
@@ -257,9 +263,10 @@ export function EASProvider({
         console.error('EAS attest failed', err);
         setErrorDomain(err);
         setAttestingDomain(false);
+        resolve(null);
       },
     );
-  }, [eas, loadReportsByDomain])
+  }), [eas, loadReportsByDomain])
 
   return (
     <EASContext.Provider value={{
