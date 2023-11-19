@@ -18,3 +18,10 @@ Optionally can apply an opacity:
 mkdir nouns2/
 node opacity.js
 ```
+
+Or alternative with the use of ImageMagik:
+
+```sh
+mkdir nouns2/
+convert 'nouns/*.png' -alpha on -channel A -evaluate set 24% +channel 'nouns2/collage%d.png'
+```
