@@ -6,9 +6,9 @@ dataSources:
     name: SCIRegistry
     network: goerli
     source:
-      address: "0x33fB6e0ccdB2d3789351087dD077Ad1Ed7bAdAAf"
+      address: "0x16E30a734da78bBA02E1f5818338a077C5165948"
       abi: SCIRegistry
-      startBlock: 10065958
+      startBlock: 10067987
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
