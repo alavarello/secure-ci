@@ -87,10 +87,11 @@ export { AlwaysFalseAuthorizer__factory } from "./factories/contracts/Authorizer
 export type { AlwaysTrueAuthorizer } from "./contracts/Authorizers/AlwaysTrueAuthorizer";
 export { AlwaysTrueAuthorizer__factory } from "./factories/contracts/Authorizers/AlwaysTrueAuthorizer__factory";
 export type { EnsAuthorizer } from "./contracts/EnsAuthorizer";
-export { EnsAuthorizer__factory } from "./factories/contracts/EnsAuthorizer__factory";
 export type { Authorizer } from "./contracts/interfaces/Authorizer";
 export { Authorizer__factory } from "./factories/contracts/interfaces/Authorizer__factory";
 export type { ISecureCIRegistry } from "./contracts/interfaces/ISecureCIRegistry";
 export { ISecureCIRegistry__factory } from "./factories/contracts/interfaces/ISecureCIRegistry__factory";
 export type { SCIRegistry } from "./contracts/SCIRegistry";
 export { SCIRegistry__factory } from "./factories/contracts/SCIRegistry__factory";
+export type { FakeScam } from "./contracts/FakeScam";
+export { FakeScam__factory } from "./factories/contracts/FakeScam__factory";

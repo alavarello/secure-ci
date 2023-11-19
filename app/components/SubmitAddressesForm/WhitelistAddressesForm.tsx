@@ -1,8 +1,11 @@
-import { Button } from '@mui/base'
+import {LoadingButton} from "@mui/lab"
 import styles from './WhitelistAddressesForm.module.css'
 import { Card, TextField } from '@mui/material'
 import { useState } from 'react'
 import {useSCIRegistry} from "../../hooks/useSCIRegistry";
+import SaveIcon from '@mui/icons-material/Save';
+import Typography from "@mui/material/Typography";
+import {ContractTransactionResponse} from "ethers";
 
 export const WhitelistAddressesForm = ({
   chainId,
@@ -14,17 +17,16 @@ export const WhitelistAddressesForm = ({
   onSubmit: (addresses: string[]) => void,
 }) => {
   const [loading, setLoading] = useState(false)
-  const [error, setError] = useState<string | null>(null)
+  const [tx, setTx] = useState<ContractTransactionResponse | null>(null)
 
   // width of the TextField
-  const width = 450
+  const width = 460
 
   const [addresses, setAddresses] = useState('');
   const sciRegistry = useSCIRegistry();
 
   async function handleSubmit(event: any) {
     setLoading(true)
-    setError(null)
 
     event.preventDefault();
 
@@ -35,10 +37,12 @@ export const WhitelistAddressesForm = ({
     }
 
     try {
-        await sciRegistry.addAddresses(domainName, chainId, addresses.split('\n'));
+        const tx = await sciRegistry.addAddresses(domainName, chainId, addresses.split('\n'));
+        // @ts-ignore
+        setTx(tx);
+        await tx.wait()
     } catch (e) {
         console.error(e);
-        setError(`${e}`);
         setLoading(false);
         return
     }
@@ -48,11 +52,10 @@ export const WhitelistAddressesForm = ({
     onSubmit?.(addresses.split('\n'))
   }
 
+
     return (
     <Card className={styles.modalContainer}>
       <h3 className={styles.h1Whitelist}>Whitelist addresses</h3>
-      {loading && <progress />}
-      {error && <p className={styles.error}>{error}</p>}
       <form className={styles.container} onSubmit={handleSubmit} >
         <TextField
           className={styles.textField}
@@ -78,14 +81,25 @@ export const WhitelistAddressesForm = ({
         />
 
       </form>
-      <Button
-          disabled={loading}
+      <LoadingButton
+        loading={loading}
+        loadingPosition="start"
+        startIcon={<SaveIcon />}
+        variant="contained"
         type="submit"
         className={styles.modalButton}
         onClick={handleSubmit}
       >
-                    Whitelist new addresses
-                    </Button>
+          Whitelist new addresses
+      </LoadingButton>
+      {tx &&
+          <a
+              href={"https://goerli.etherscan.io/tx/" + tx.hash}
+              target="_blank"
+          >
+              Click here to view tx
+          </a>
+      }
     </Card>
   )
 }
