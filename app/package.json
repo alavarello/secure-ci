@@ -15,6 +15,7 @@
     "@ethereum-attestation-service/eas-sdk": "^1.3.3",
     "@fontsource/lexend": "^5.0.17",
     "@mui/icons-material": "^5.14.18",
+    "@mui/lab": "^5.0.0-alpha.153",
     "@mui/material": "^5.14.18",
     "@rainbow-me/rainbowkit": "^1.2.0",
     "@web3inbox/core": "^0.0.22",
