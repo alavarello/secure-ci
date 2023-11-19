@@ -7,6 +7,7 @@ import {useEffect, useState} from "react";
 import {useChainId} from "../../hooks/useChainId";
 import {useQuery} from "react-query";
 import {getDomainsByContractAddress, getDomainWhitelistedAddresses} from "../../queries/domains";
+import useRandomBodyBackground from "../../hooks/useRandomBodyBackground";
 
 const cowParams: CowSwapWidgetParams = {
     "appCode": "secureCI COWSwap Integration",
@@ -45,7 +46,7 @@ const Swap: NextPage = () => {
         whiteListedDomains &&
         whiteListedDomains.chainId === `${originalChainId}` &&
         whiteListedDomains.domains.some((d) => d.id === domain);
-
+    useRandomBodyBackground();
     return (
         <div className={styles.main}>
             {!isSupportedNetwork && <h2 className={styles.unsupported}>Unsupported network <br /> (Please use Gnosis, Goerli or Mainnet)</h2>}
