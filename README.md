@@ -31,3 +31,4 @@ On the `snaps` folder root run
 This will start the snap in localhost:8080
 
 ## App
+.
