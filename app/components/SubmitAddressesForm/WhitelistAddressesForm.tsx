@@ -44,6 +44,12 @@ export const WhitelistAddressesForm = ({
         // @ts-ignore
         setTx(tx);
         await tx.wait()
+        dispatchPopup({props: {
+                open: true,
+                content: <>Addresses added successfully</>,
+                severity: "success",
+                title: "Transaction included"
+            }})
     } catch (e) {
         console.error(e);
         setLoading(false);

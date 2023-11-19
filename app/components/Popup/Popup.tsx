@@ -10,7 +10,7 @@ function Popup() {
 
     setTimeout(() => {
         if(!open) return;
-        dispatchPopup({props: {open: false, content: <></>, severity: "error", title: "Error"}})
+        dispatchPopup({props: {open: false, content: <></>, severity: "success", title: ""}})
     }, 6000)
 
     return <Snackbar message="Here is snackbar message" open={open}>
