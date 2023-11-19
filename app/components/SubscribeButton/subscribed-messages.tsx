@@ -56,6 +56,9 @@ function SubscribedMessages({
                 )}
               </TableCell>
               <TableCell>
+                {new Date(message.publishedAt).toLocaleString()}
+              </TableCell>
+              <TableCell className={styles.actions}>
                 {opened === message.id ? (
                   <button onClick={() => closeMessage()} className={styles.arrow}>
                     <svg style={{ width: '24px', height: '24px' }} aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
