@@ -5,7 +5,7 @@ export class SCIRegistry  {
     private _contract: Contract;
 
     private static _configs: {[key: number]: string} = {
-        5: "0xc17d3Bce3E18AF745a4392C52f637a1693a64eA0",
+        5: "0xB5B2cccb4E39644ecaF1d22Cf01507B2cDb881C6",
         11155111: "0x11B6CFb8e498Ac6FA6ADB7Ef2e6c528b13C42B87",
         31337: "0x5FbDB2315678afecb367f032d93F642f64180aa3",
         1: ""
