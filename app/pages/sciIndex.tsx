@@ -8,6 +8,7 @@ import '@fontsource/lexend/400.css';
 import '@fontsource/lexend/500.css';
 import '@fontsource/lexend/700.css';
 import { useRouter } from 'next/router'
+import useRandomBodyBackground from "../hooks/useRandomBodyBackground";
 
 
 const SCIHome = () => {

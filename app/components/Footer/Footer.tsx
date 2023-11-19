@@ -1,6 +1,6 @@
 import styles from "../../styles/Footer.module.css";
 import * as React from "react";
-import { Button } from "@mui/material";
+import {Button, LinearProgress} from "@mui/material";
 import { useEffect, useState } from "react";
 import { connectSnap, getSnap } from "../../services/snap/snap";
 import { useConnectedAddress } from "../../hooks/useConnectedAddress";
@@ -45,7 +45,7 @@ function Footer() {
             </a>
 
             {isPluginActive ? "SCI is active and monitoring." :
-                isConnectingPlugin ? <progress/> :
+                isConnectingPlugin ? <LinearProgress style={{maxWidth: "100px", margin: "50px"}} /> :
                     <Button onClick={() => {
                         handleConnectPlugin()
                     }}>Activate SCI! Make your transactions secure.

@@ -10,6 +10,8 @@ import { useState } from 'react';
 import ModalContextProvider from '../components/Modal/Modal.provider';
 import {StyledEngineProvider} from "@mui/material";
 import ConnectButtonProvider from "../components/ConnectButton/ConnectButtonProvider";
+import {PopupProvider} from "../components/Popup/PopupProvider";
+import Popup from "../components/Popup/Popup";
 
 
 
@@ -31,12 +33,15 @@ function MyApp({ Component, pageProps }: AppProps) {
       <ConnectButtonProvider>
           <EASProvider>
             <StyledEngineProvider injectFirst>
-                <CssBaseline />
-                <ModalContextProvider>
-                  <Header/>
-                  <Component {...pageProps} />
-                  <Footer />
-                </ModalContextProvider>
+                <PopupProvider>
+                    <CssBaseline />
+                    <ModalContextProvider>
+                      <Header/>
+                      <Component {...pageProps} />
+                      <Footer />
+                      <Popup />
+                    </ModalContextProvider>
+                </PopupProvider>
             </StyledEngineProvider>
           </EASProvider>
       </ConnectButtonProvider>

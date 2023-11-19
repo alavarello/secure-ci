@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
 import styles from './Reports.module.css';
 import { EASContext } from '../../stores/eas';
+import {LinearProgress} from "@mui/material";
 
 function ReportsDomain({
   domainName,
@@ -22,7 +23,7 @@ function ReportsDomain({
   const loading = isDomainLoading(domainName)
 
   if (loading) {
-    return <progress />;
+    return <LinearProgress style={{maxWidth: "100px", margin: "50px"}} />;
   }
 
   const reports = getReportByDomain(domainName)

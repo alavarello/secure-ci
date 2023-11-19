@@ -1,7 +1,7 @@
 import styles from './AttestButton.module.css';
 import { useContext } from "react";
 import { EASContext } from "../../stores/eas";
-import {Button} from "@mui/material";
+import {Button, LinearProgress} from "@mui/material";
 import { useConnectedAddress } from '../../hooks/useConnectedAddress';
 import { useChainId } from '../../hooks/useChainId';
 import { sendNotification } from '../../utils/web3inbox';
@@ -32,7 +32,7 @@ function ReportDomainButton({
   }
 
   if (attestingDomain) {
-    return <progress />;
+    return <LinearProgress style={{maxWidth: "100px", margin: "50px"}} />;
   }
 
   return (

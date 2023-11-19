@@ -1,11 +1,12 @@
 import {LoadingButton} from "@mui/lab"
 import styles from './WhitelistAddressesForm.module.css'
 import { Card, TextField } from '@mui/material'
-import { useState } from 'react'
+import {useContext, useState} from 'react'
 import {useSCIRegistry} from "../../hooks/useSCIRegistry";
 import SaveIcon from '@mui/icons-material/Save';
 import Typography from "@mui/material/Typography";
 import {ContractTransactionResponse} from "ethers";
+import {PopupContext} from "../Popup/PopupProvider";
 
 export const WhitelistAddressesForm = ({
   chainId,
@@ -18,6 +19,7 @@ export const WhitelistAddressesForm = ({
 }) => {
   const [loading, setLoading] = useState(false)
   const [tx, setTx] = useState<ContractTransactionResponse | null>(null)
+  const {dispatchPopup} = useContext(PopupContext);
 
   // width of the TextField
   const width = 460
@@ -26,6 +28,7 @@ export const WhitelistAddressesForm = ({
   const sciRegistry = useSCIRegistry();
 
   async function handleSubmit(event: any) {
+    if(!addresses) return
     setLoading(true)
 
     event.preventDefault();
@@ -41,9 +44,23 @@ export const WhitelistAddressesForm = ({
         // @ts-ignore
         setTx(tx);
         await tx.wait()
+        dispatchPopup({props: {
+                open: true,
+                content: <>Addresses added successfully</>,
+                severity: "success",
+                title: "Transaction included"
+            }})
     } catch (e) {
         console.error(e);
         setLoading(false);
+        dispatchPopup({props: {
+                open: true,
+                content: <>
+                    Ups there was an error sending your transaction. Please try again later
+                </>,
+                severity: "error",
+                title: "Error"
+            }})
         return
     }
 
@@ -83,6 +100,7 @@ export const WhitelistAddressesForm = ({
       </form>
       <LoadingButton
         loading={loading}
+        disabled={!addresses}
         loadingPosition="start"
         startIcon={<SaveIcon />}
         variant="contained"

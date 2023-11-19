@@ -8,9 +8,11 @@ async function main() {
 
   registry.addAuthorizer(1, ensAuthorizer.target);
 
-  console.log(
-    `SCI Registry deployed to ${await registry.getAddress()}`
-  );
+  const FakeScam = await ethers.deployContract("FakeScam", [], {});
+  await FakeScam.waitForDeployment();
+
+  console.log(`FakeScam deployed to ${await FakeScam.getAddress()}`);
+  console.log(`SCI Registry deployed to ${await registry.getAddress()}`);
 }
 
 // We recommend this pattern to be able to use async/await everywhere

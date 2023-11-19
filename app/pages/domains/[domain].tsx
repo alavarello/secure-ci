@@ -24,6 +24,7 @@ import { useChainId } from '../../hooks/useChainId';
 import { FC, useEffect } from "react";
 import SubscribeDomainButton from '../../components/SubscribeButton/subscribe-domain';
 import { sendNotification } from '../../utils/web3inbox';
+import useRandomBodyBackground from "../../hooks/useRandomBodyBackground";
 
 const ChainSelector: FC<{
     originalChainId: number,

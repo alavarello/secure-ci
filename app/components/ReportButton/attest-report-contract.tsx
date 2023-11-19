@@ -1,7 +1,7 @@
 import styles from './AttestButton.module.css';
 import { useContext } from "react";
 import { EASContext } from "../../stores/eas";
-import { Button } from '@mui/material';
+import {Button, LinearProgress} from '@mui/material';
 
 function ReportContractButton({
   chainId,
@@ -21,7 +21,7 @@ function ReportContractButton({
   }
 
   if (attestingContract) {
-    return <progress />;
+    return <LinearProgress style={{maxWidth: "100px", margin: "50px"}} />;
   }
 
   return (
